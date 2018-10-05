@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HabitPage from './HabitPage';
-import './App.css';
+import '../styles/App.css';
+import '../styles/Resizer.css';
 
 class App extends Component {
   render() {

@@ -13,7 +13,7 @@ class HabitTable extends Component {
     const habitBoxesLength = Array.from(new Array(cols));
 
     return (
-      <div className="habit-test">
+      <div className="habit-table">
         {habits.map(habit => {
           //get saved starting date. and for each check whether or not the habit's dates includes this number
           //if it does then set completed to true, otherwise false
