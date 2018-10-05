@@ -13,6 +13,10 @@ code {
     monospace;
 }
 
+.SplitPane {
+  overflow: scroll !important;
+}
+
 .habit-table {
   width: 100%;
 }
@@ -31,4 +35,14 @@ code {
 .habit-list {
   align-self: flex-end;
   width: 100px;
+}
+
+.habit-list-name-input {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.habit-list-name-input input {
+  margin-left: 20px;
 }

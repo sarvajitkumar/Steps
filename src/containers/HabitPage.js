@@ -19,12 +19,23 @@ class HabitPage extends Component {
   }
 
   componentDidMount() {
-    const db = new DataStore({
+    this.db = new DataStore({
       filename: 'steps/habitsData',
+      timestampData: true,
       autoload: true
     });
 
-    db.find({}, (err, data) => {
+    this.db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
+      this.setState({
+        habits: data
+      });
+    });
+  }
+
+  habitsUpdated = () => {
+    this.db.loadDatabase();
+
+    this.db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
       this.setState({
         habits: data
       });
@@ -33,14 +44,14 @@ class HabitPage extends Component {
 
   render() {
     //eventually change it so the right pane is ABOVE the left pane
-    if (!this.state.habits.length) {
-      return <div>LOADING</div>
-    }
+    // if (!this.state.habits.length) {
+    //   return <div>LOADING</div>
+    // }
 
     return (
       <SplitPane split="vertical" minSize={50} default={500}>
         <HabitTable habits={this.state.habits} />
-        <HabitList habits={this.state.habits} />
+        <HabitList habits={this.state.habits} habitsUpdated={this.habitsUpdated} />
       </SplitPane>
     );
   }

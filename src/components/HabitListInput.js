@@ -17,7 +17,7 @@ class HabitListInput extends Component {
 
   render() {
     return (
-      <div>
+      <div className="habit-list-name-input">
         <input type="text"
                value={this.state.name}
                onChange={this.handleInputChange}
