@@ -18,9 +18,9 @@ class HabitTable extends Component {
           //get saved starting date. and for each check whether or not the habit's dates includes this number
           //if it does then set completed to true, otherwise false
           return (
-            <div className="habit-row">
-              {habitBoxesLength.map(_ => (
-                <HabitBox />
+            <div key={`${habit.name}-row`} className="habit-row">
+              {habitBoxesLength.map((_, index) => (
+                <HabitBox key={`${habit.name}-box-${index}`} />
               ))}
             </div>
           )

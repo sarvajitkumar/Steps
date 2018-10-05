@@ -7,6 +7,7 @@
   "dependencies": {
     "electron-is-dev": "^1.0.1",
     "electron-store": "^2.0.0",
+    "nedb": "^1.8.0",
     "node-sass": "^4.9.3",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",

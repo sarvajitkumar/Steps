@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import HabitTable from '../components/HabitTable';
 import HabitList from '../components/HabitList';
 import SplitPane from 'react-split-pane';
+import DataStore from 'nedb';
 
 class HabitPage extends Component {
-  //habits will look like this
+  //habit schema
   /*
     habits: [
       {
@@ -14,25 +15,28 @@ class HabitPage extends Component {
     ]
   */
   state = {
-    habits: [
-      {
-        name: 'Exercise',
-        dates: ['03/12/2018', '03/13/2018']
-      },
-      {
-        name: 'Meditation',
-        dates: ['03/12/2018', '03/13/2018']
-      }
-    ]
+    habits: []
   }
 
   componentDidMount() {
-    //fetch all the habits stored
-    //use SQL? for now, we'll use the most basic DB or storage
+    const db = new DataStore({
+      filename: 'steps/habitsData',
+      autoload: true
+    });
+
+    db.find({}, (err, data) => {
+      this.setState({
+        habits: data
+      });
+    });
   }
 
   render() {
     //eventually change it so the right pane is ABOVE the left pane
+    if (!this.state.habits.length) {
+      return <div>LOADING</div>
+    }
+
     return (
       <SplitPane split="vertical" minSize={50} default={500}>
         <HabitTable habits={this.state.habits} />

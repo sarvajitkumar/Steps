@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
+import HabitListInput from './HabitListInput';
+import DataStore from 'nedb';
 
 class HabitList extends Component {
+  componentDidMount() {
+    this.db = new DataStore({ filename: 'steps/habitsData', autoload: true });
+  }
+  
+  submitChangeName = (habit, newName) => {
+    this.db.update({ _id: habit._id }, { $set: { name: newName } });
+  }
+
   render() {
-    //for each habit, make an input box that allows you to change that habit
     return (
       <div className="habit-list">
         {this.props.habits.map(habit => (
-          <div>
-            <input value={habit.name} />
-          </div>
+          <HabitListInput
+            key={habit._id}
+            name={habit.name}
+            submitChange={(newName) => { this.submitChangeName(habit, newName)} } />
         ))}
       </div>
     );
