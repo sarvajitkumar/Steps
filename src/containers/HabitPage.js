@@ -4,6 +4,8 @@ import HabitList from '../components/HabitList';
 import SplitPane from 'react-split-pane';
 import DataStore from 'nedb';
 
+let db;
+
 class HabitPage extends Component {
   //habit schema
   /*
@@ -19,23 +21,23 @@ class HabitPage extends Component {
   }
 
   componentDidMount() {
-    this.db = new DataStore({
+    db = new DataStore({
       filename: 'steps/habitsData',
       timestampData: true,
       autoload: true
     });
 
-    this.db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
-      this.setState({
-        habits: data
-      });
-    });
+    this.fetchHabits();
   }
 
-  habitsUpdated = () => {
-    this.db.loadDatabase();
+  syncAddedHabit = (newHabit) => {
+    this.setState({
+      habits: [ ...this.state.habits, newHabit ]
+    })
+  }
 
-    this.db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
+  fetchHabits() {
+    db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
       this.setState({
         habits: data
       });
@@ -43,15 +45,16 @@ class HabitPage extends Component {
   }
 
   render() {
-    //eventually change it so the right pane is ABOVE the left pane
-    // if (!this.state.habits.length) {
-    //   return <div>LOADING</div>
-    // }
+    if (!this.state.habits.length) {
+      return <div>LOADING</div>
+    }
 
     return (
       <SplitPane split="vertical" minSize={150} primary="second">
         <HabitTable habits={this.state.habits} />
-        <HabitList habits={this.state.habits} habitsUpdated={this.habitsUpdated} />
+        <HabitList
+          habits={this.state.habits}
+          syncAddedHabit={this.syncAddedHabit} />
       </SplitPane>
     );
   }

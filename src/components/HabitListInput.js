@@ -11,7 +11,7 @@ class HabitListInput extends Component {
     });
   }
 
-  handleInputSubmit = (evt) => {
+  handleInputSubmit = () => {
     this.props.submitChange(this.state.name);
   }
 

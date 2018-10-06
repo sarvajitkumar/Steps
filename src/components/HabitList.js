@@ -24,7 +24,7 @@ class HabitList extends Component {
         name: newHabitName,
         dates: [moment().format('MM/DD/YYYY')]
       }, (err, habit) => {
-        this.props.habitsUpdated();
+        this.props.syncAddedHabit(habit);
       });
     }
 

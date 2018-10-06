@@ -15,10 +15,11 @@ code {
 
 .SplitPane {
   overflow: scroll !important;
+  height: auto !important;
 }
 
 .habit-table {
-  width: 100%;
+  /* position: fixed; */
 }
 
 .habit-row {
@@ -30,10 +31,15 @@ code {
   height: 30px;
   border: 1px solid black;
   background-color: green;
+  cursor: pointer;
+}
+
+.habit-box:hover {
+  background-color: grey;
 }
 
 .habit-list {
-  align-self: flex-end;
+  /* background-color: white; */
 }
 
 .habit-list-name-input {
@@ -41,10 +47,5 @@ code {
   align-items: center;
   justify-content: center;
   height: 30px;
-
-}
-
-.habit-list-name-input input {
-  /* margin-left: 1em;
-  margin-right: 1em; */
+  border-bottom: 1px solid #ccc;
 }
