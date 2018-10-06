@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HabitListInput from './HabitListInput';
+import HabitListItem from './HabitListItem';
 import DataStore from 'nedb';
 import moment from 'moment';
 
@@ -41,14 +41,14 @@ class HabitList extends Component {
     return (
       <div className="habit-list">
         {this.props.habits.map(habit => (
-          <HabitListInput
+          <HabitListItem
             key={habit._id}
             name={habit.name}
             submitChange={(newName) => { this.submitChangeName(habit, newName)} } />
         ))}
         {this.state.newHabitInputOpened ?
           <div>
-            <HabitListInput
+            <HabitListItem
               placeholder={"Exercise"}
               autofocus={true}
               name={this.state.newHabitName}

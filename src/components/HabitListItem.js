@@ -23,13 +23,17 @@ class HabitListInput extends Component {
 
   render() {
     return (
-      <div className="habit-list-name-input">
+      <div className="habit-list-item">
         <input type="text"
+               className="habit-list-item-input"
                ref={(input) => { this.nameInput = input; }}
                value={this.state.name}
                placeholder={this.props.placeholder && this.props.placeholder}
                onChange={this.handleInputChange}
                onBlur={this.handleInputSubmit} />
+        <span className="habit-list-item-info">
+          7{"✓"}
+        </span>
       </div>
     );
   }

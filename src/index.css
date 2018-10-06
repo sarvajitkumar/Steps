@@ -19,7 +19,7 @@ code {
 }
 
 .habit-table {
-  position: fixed;
+  position: absolute;
 }
 
 .habit-row {
@@ -39,13 +39,26 @@ code {
 }
 
 .habit-list {
-  background-color: white;
+  background-color: #505256;
+  color: white;
+  opacity: 1;
 }
 
-.habit-list-name-input {
+.habit-list-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding-left: 6px;
+  padding-right: 6px;
   height: 30px;
   border-bottom: 1px solid #ccc;
+}
+
+.habit-list-item-input {
+  background-color: black;
+  color: white;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }

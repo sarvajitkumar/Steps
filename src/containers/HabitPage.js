@@ -50,7 +50,7 @@ class HabitPage extends Component {
     }
 
     return (
-      <SplitPane split="vertical" minSize={150} primary="second">
+      <SplitPane split="vertical" minSize={180} primary="second">
         <HabitTable habits={this.state.habits} />
         <HabitList
           habits={this.state.habits}
