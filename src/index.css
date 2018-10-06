@@ -13,11 +13,6 @@ code {
     monospace;
 }
 
-.SplitPane {
-  overflow: scroll !important;
-  height: auto !important;
-}
-
 .habit-table {
   position: absolute;
 }
@@ -29,7 +24,8 @@ code {
 .habit-box {
   width: 30px;
   height: 30px;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
   background-color: green;
   cursor: pointer;
 }

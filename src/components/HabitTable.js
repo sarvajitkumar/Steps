@@ -9,7 +9,7 @@ class HabitTable extends Component {
     //AND all the other dates...
     //we also need the data of how many rows they have
 
-    const cols = 10; //how many dates the user would like to show at a given time
+    const cols = 30; //how many dates the user would like to show at a given time
     const habitBoxesLength = Array.from(new Array(cols));
 
     return (
