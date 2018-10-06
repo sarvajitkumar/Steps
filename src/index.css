@@ -19,7 +19,7 @@ code {
 }
 
 .habit-table {
-  /* position: fixed; */
+  position: fixed;
 }
 
 .habit-row {
@@ -39,7 +39,7 @@ code {
 }
 
 .habit-list {
-  /* background-color: white; */
+  background-color: white;
 }
 
 .habit-list-name-input {
