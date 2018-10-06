@@ -3,24 +3,24 @@ import HabitListInput from './HabitListInput';
 import DataStore from 'nedb';
 import moment from 'moment';
 
+let db;
+
 class HabitList extends Component {
   state = {
     newHabitInputOpened: false
   }
 
   componentDidMount() {
-    this.db = new DataStore({
+    db = new DataStore({
       filename: 'steps/habitsData',
       timestampData: true,
       autoload: true 
     });
   }
 
-  createHabit = (event) => {
-    const newHabitName = event.target.value;
-    
+  createHabit = (newHabitName) => {
     if (newHabitName !== '') {
-      this.db.insert({
+      db.insert({
         name: newHabitName,
         dates: [moment().format('MM/DD/YYYY')]
       }, (err, habit) => {
@@ -34,7 +34,7 @@ class HabitList extends Component {
   }
   
   submitChangeName = (habit, newName) => {
-    this.db.update({ _id: habit._id }, { $set: { name: newName } });
+    db.update({ _id: habit._id }, { $set: { name: newName } });
   }
 
   render() {
@@ -48,10 +48,11 @@ class HabitList extends Component {
         ))}
         {this.state.newHabitInputOpened ?
           <div>
-            <input
+            <HabitListInput
               placeholder={"Exercise"}
-              value={this.state.newHabitName}
-              onBlur={this.createHabit} />
+              autofocus={true}
+              name={this.state.newHabitName}
+              submitChange={this.createHabit} />
           </div> :
           <div onClick={() => {this.setState({newHabitInputOpened: true})}}>+</div>
         }

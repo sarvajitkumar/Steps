@@ -26,23 +26,25 @@ code {
 }
 
 .habit-box {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   border: 1px solid black;
   background-color: green;
 }
 
 .habit-list {
   align-self: flex-end;
-  width: 100px;
 }
 
 .habit-list-name-input {
   display: flex;
   align-items: center;
-  height: 50px;
+  justify-content: center;
+  height: 30px;
+
 }
 
 .habit-list-name-input input {
-  margin-left: 20px;
+  /* margin-left: 1em;
+  margin-right: 1em; */
 }
