@@ -54,7 +54,11 @@ class HabitList extends Component {
               name={this.state.newHabitName}
               submitChange={this.createHabit} />
           </div> :
-          <div onClick={() => {this.setState({newHabitInputOpened: true})}}>+</div>
+          <div
+            style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '30px'}}
+            onClick={() => {this.setState({newHabitInputOpened: true})}}>
+            +
+          </div>
         }
       </div>
     );
