@@ -18,9 +18,9 @@ class DateRow extends Component {
   render() {
     return (
       <div className="date-row">
-        {this.state.dates.length && this.state.dates.map(date => {
+        {this.state.dates.length && this.state.dates.map((date, index) => {
           return (
-            <span key={`dateRow-${date}`}
+            <span key={`dateRow-${index}-${date}`}
                   className="dateRow-date">
               {date}
             </span>

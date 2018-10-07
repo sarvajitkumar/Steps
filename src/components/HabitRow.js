@@ -1,21 +1,46 @@
 import React, { Component } from 'react';
+import DataStore from 'nedb';
 import HabitBox from './HabitBox';
+
+let db;
 
 class HabitRow extends Component {
   componentDidMount() {
-    //set the coloring of the habit based upon whether or not the habit's dates include 
-    //any of the dates
+    db = new DataStore({
+      filename: 'steps/habitsData',
+      timestampData: true,
+      autoload: true
+    });
+  }
+
+  toggleHabit = (date) => {
+    const formattedDate = date.format('MM/DD/YYYY');
+    const habit = this.props.habit;
+    const hasCompleted = habit.dates.includes(formattedDate);
+
+    db.update({ _id: habit._id }, {
+      $set: {
+        dates: (hasCompleted ?
+          habit.dates.filter(date => date !== formattedDate) :
+          habit.dates.concat(formattedDate)
+        )
+      }
+    });
+  }
+
+  checkHabitCompletion = (habit, date) => {
+    return habit.dates.includes(date.format("MM/DD/YYYY"));
   }
 
   render() {
-    //here we can have a method that
-    //checks each date and habit and whether the habit.dates.includes(date.format('MM/DD/YYYY'))
     const habit = this.props.habit;
 
     return (
       <div className="habit-row">
-        {this.props.dates.map((_, index) => (
-          <HabitBox key={`${habit.name}-box-${index}`} />
+        {this.props.dates.map(date => (
+          <HabitBox key={`habit-box-${date.format('MM/DD')}`}
+                    toggleHabit={() => {this.toggleHabit(date)}}
+                    backgroundColor={this.checkHabitCompletion(habit, date) ? 'green': 'grey'} />
         ))}
       </div>
     );

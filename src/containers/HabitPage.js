@@ -27,6 +27,7 @@ class HabitPage extends Component {
       autoload: true
     });
 
+    // db.remove({}, {multi: true});
     this.fetchHabits();
   }
 
@@ -45,9 +46,9 @@ class HabitPage extends Component {
   }
 
   render() {
-    if (!this.state.habits.length) {
-      return <div>LOADING</div>
-    }
+    // if (!this.state.habits.length) {
+    //   return <div>LOADING</div>
+    // }
 
     return (
       <SplitPane split="vertical" minSize={180} primary="second" paneStyle={{overflow:"auto"}}>
