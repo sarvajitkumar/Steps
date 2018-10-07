@@ -43,6 +43,7 @@ class HabitList extends Component {
           <HabitListItem
             key={habit._id}
             name={habit.name}
+            completionCount={habit.dates.length}
             submitChange={(newName) => { this.submitChangeName(habit, newName)} } />
         ))}
         {this.state.newHabitInputOpened ?

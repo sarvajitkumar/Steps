@@ -32,7 +32,7 @@ class HabitListInput extends Component {
                onChange={this.handleInputChange}
                onBlur={this.handleInputSubmit} />
         <span className="habit-list-item-info">
-          7{"✓"}
+          {this.props.completionCount}{"✓"}
         </span>
       </div>
     );
