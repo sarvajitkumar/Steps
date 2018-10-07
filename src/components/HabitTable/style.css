@@ -1,3 +1,23 @@
+.habit-table {
+  position: absolute;
+}
+
+.habit-row {
+  display: flex;
+}
+
+.habit-box {
+  width: 30px;
+  height: 30px;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  cursor: pointer;
+}
+
+.habit-box:hover {
+  background-color: grey;
+}
+
 .date-row {
   display: flex;
   align-items: center;

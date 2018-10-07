@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import HabitTable from '../components/HabitTable';
-import HabitList from '../components/HabitList';
+import HabitTable from '../components/HabitTable/HabitTable';
+import HabitList from '../components/HabitList/HabitList';
 import SplitPane from 'react-split-pane';
 import DataStore from 'nedb';
 
