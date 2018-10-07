@@ -5,6 +5,10 @@ import HabitBox from './HabitBox';
 let db;
 
 class HabitRow extends Component {
+  state = {
+    habit: this.props.habit
+  }
+
   componentDidMount() {
     db = new DataStore({
       filename: 'steps/habitsData',
@@ -15,7 +19,7 @@ class HabitRow extends Component {
 
   toggleHabit = (date) => {
     const formattedDate = date.format('MM/DD/YYYY');
-    const habit = this.props.habit;
+    const habit = this.state.habit;
     const hasCompleted = habit.dates.includes(formattedDate);
 
     db.update({ _id: habit._id }, {
@@ -25,6 +29,13 @@ class HabitRow extends Component {
           habit.dates.concat(formattedDate)
         )
       }
+    }, { returnUpdatedDocs: true },
+    (err, _, updatedHabit) => {
+      if (!err) {
+        this.setState({
+          habit: updatedHabit
+        });
+      }
     });
   }
 
@@ -33,12 +44,12 @@ class HabitRow extends Component {
   }
 
   render() {
-    const habit = this.props.habit;
+    const habit = this.state.habit;
 
     return (
       <div className="habit-row">
         {this.props.dates.map(date => (
-          <HabitBox key={`habit-box-${date.format('MM/DD')}`}
+          <HabitBox key={`habit-box-${date.format("MM/DD")}`}
                     toggleHabit={() => {this.toggleHabit(date)}}
                     backgroundColor={this.checkHabitCompletion(habit, date) ? 'green': 'grey'} />
         ))}

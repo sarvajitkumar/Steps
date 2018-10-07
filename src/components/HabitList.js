@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import HabitListItem from './HabitListItem';
 import DataStore from 'nedb';
-import moment from 'moment';
 
 let db;
 
@@ -22,7 +21,7 @@ class HabitList extends Component {
     if (newHabitName !== '') {
       db.insert({
         name: newHabitName,
-        dates: [moment().format('MM/DD/YYYY')]
+        dates: []
       }, (err, habit) => {
         this.props.syncAddedHabit(habit);
       });
