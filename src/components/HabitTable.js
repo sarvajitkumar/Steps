@@ -1,30 +1,51 @@
 import React, { Component } from 'react';
 import HabitBox from './HabitBox';
+import DateRow from './DateRow';
+import Moment from 'moment';
+import {extendMoment} from 'moment-range';
 
-//this could potentially be a functional rendering component
 class HabitTable extends Component {
+  state = {
+    dates: []
+  }
+
+  componentWillMount() {
+    this.getDates();
+  }
+
+  getDates() {
+    const moment = extendMoment(Moment);
+    const range = moment.range(moment().subtract(15, 'days'), moment().add(15, 'days'));
+    const dates = Array.from(range.by('days'));
+
+    this.setState({
+      dates
+    });
+  }
+
   render() {
     const habits = this.props.habits;
-    //we have to be able to get TODAY's date.
-    //AND all the other dates...
-    //we also need the data of how many rows they have
-
-    const cols = 30; //how many dates the user would like to show at a given time
-    const habitBoxesLength = Array.from(new Array(cols));
 
     return (
       <div className="habit-table">
         {habits.map(habit => {
           //get saved starting date. and for each check whether or not the habit's dates includes this number
           //if it does then set completed to true, otherwise false
+
+          //might have to make these into a separate component
+
+          //here we can have a method that
+          //checks each date and habit and whether the habit.dates.includes(date.format('MM/DD/YYYY'))
           return (
             <div key={`${habit.name}-row`} className="habit-row">
-              {habitBoxesLength.map((_, index) => (
+              {this.state.dates.map((_, index) => (
                 <HabitBox key={`${habit.name}-box-${index}`} />
               ))}
             </div>
           )
         })}
+
+        <DateRow dates={this.state.dates} />
       </div>
     );
   }
