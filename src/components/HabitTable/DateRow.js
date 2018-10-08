@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 class DateRow extends Component {
-  state = {
-    dates: []
-  }
-
-  componentWillMount() {
-    this.formatDates();
-  }
-
-  formatDates() {
-    this.setState({
-      dates: this.props.dates.map(date => date.format('DD'))
-    })
-  }
-
   render() {
+    const dates = this.props.dates;
+
     return (
       <div className="date-row">
-        {this.state.dates.length && this.state.dates.map((date, index) => {
+        {dates.map((date, index) => {
+          const formattedDate = date.format('DD');
+
           return (
-            <span key={`dateRow-${index}-${date}`}
-                  className="dateRow-date">
-              {date}
-            </span>
-          )
+            <div key={`dateRow-date-${index}-${formattedDate}`}
+                 className="dateRow-date">
+              <span className={`dateRow-date ${date.isSame(moment(), 'day') && 'date-is-today'}`}>
+                {formattedDate}
+              </span>
+            </div>
+          );
         })}
       </div>
     );
