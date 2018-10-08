@@ -57,7 +57,7 @@ class HabitPage extends Component {
 
   render() {
     if (!this.state.habits.length) {
-      return <div>LOADING</div>
+      return <div>LOADING...</div>
     }
 
     return (
