@@ -18,6 +18,8 @@ class HabitRow extends Component {
   }
 
   toggleHabit = (date) => {
+    if (date.isAfter(new Date())) return;
+
     const formattedDate = date.format('MM/DD/YYYY');
     const habit = this.state.habit;
     const hasCompleted = habit.dates.includes(formattedDate);
@@ -45,15 +47,25 @@ class HabitRow extends Component {
     return habit.dates.includes(date.format("MM/DD/YYYY"));
   }
 
-  render() {
+  getBoxBackgroundColor(date) {
     const habit = this.state.habit;
 
+    if (date.isAfter(new Date())) {
+      return 'grey';
+    } else if (habit.dates.includes(date.format("MM/DD/YYYY"))) {
+      return 'green';
+    } else {
+      return 'darkgrey';
+    }
+  }
+
+  render() {
     return (
       <div className="habit-row">
         {this.props.dates.map(date => (
           <HabitBox key={`habit-box-${date.format("MM/DD")}`}
                     toggleHabit={() => {this.toggleHabit(date)}}
-                    backgroundColor={this.checkHabitCompletion(habit, date) ? 'green': 'grey'} />
+                    backgroundColor={this.getBoxBackgroundColor(date)} />
         ))}
       </div>
     );
