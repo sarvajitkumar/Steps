@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HabitListItem from './HabitListItem';
 import DataStore from 'nedb';
+import moment from 'moment';
 
 let db;
 
@@ -36,6 +37,21 @@ class HabitList extends Component {
     db.update({ _id: habit._id }, { $set: { name: newName } });
   }
 
+  getConsecutiveCount(dates) {
+    let date = moment();
+    let counter = dates.includes(date.format('MM/DD/YYYY')) ? 1 : 0;
+
+    while (date != null) {
+      date.subtract(1, 'days');
+      const formattedDate = date.format('MM/DD/YYYY');
+
+      if (dates.includes(formattedDate)) counter += 1
+      else date = null;
+    }
+
+    return counter;
+  }
+
   render() {
     return (
       <div className="habit-list">
@@ -43,7 +59,7 @@ class HabitList extends Component {
           <HabitListItem
             key={habit._id}
             name={habit.name}
-            completionCount={habit.dates.length}
+            completionCount={this.getConsecutiveCount(habit.dates)}
             submitChange={(newName) => { this.submitChangeName(habit, newName)} } />
         ))}
         {this.state.newHabitInputOpened ?

@@ -35,6 +35,8 @@ class HabitRow extends Component {
         this.setState({
           habit: updatedHabit
         });
+
+        this.props.syncToggleHabit(updatedHabit);
       }
     });
   }

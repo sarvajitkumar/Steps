@@ -36,6 +36,17 @@ class HabitPage extends Component {
     })
   }
 
+  syncToggleHabit = (newHabit) => {
+    const newHabits = this.state.habits.map(habit => {
+      if (habit._id === newHabit._id) return newHabit
+      return habit;
+    });
+
+    this.setState({
+      habits: newHabits
+    })
+  }
+
   fetchHabits() {
     db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
       this.setState({
@@ -51,7 +62,9 @@ class HabitPage extends Component {
 
     return (
       <SplitPane split="vertical" minSize={180} primary="second" paneStyle={{overflow:"auto"}}>
-        <HabitTable habits={this.state.habits} />
+        <HabitTable
+          habits={this.state.habits}
+          syncToggleHabit={this.syncToggleHabit} />
         <HabitList
           habits={this.state.habits}
           syncAddedHabit={this.syncAddedHabit} />

@@ -29,7 +29,8 @@ class HabitTable extends Component {
         {this.props.habits.map(habit => (
           <HabitRow key={`${habit.name}-row`}
                     habit={habit}
-                    dates={this.state.dates} />
+                    dates={this.state.dates}
+                    syncToggleHabit={this.props.syncToggleHabit} />
         ))}
         <DateRow dates={this.state.dates} />
       </div>
