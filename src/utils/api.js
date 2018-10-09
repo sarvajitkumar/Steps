@@ -21,6 +21,19 @@ export function fetchHabits() {
   })
 }
 
+//we have to update the habits WITH the NEWLY updated habit
+//create habit
+export function createHabit({name, dates}) {
+  return new Promise((res, rej) => {
+    const db = loadDatabase();
+
+    db.insert({name, dates}, (err, habit) => {
+      if (err) rej(err);
+      res(habit)
+    });
+  })
+}
+
 //add habit
 //update habit
 //remove habit

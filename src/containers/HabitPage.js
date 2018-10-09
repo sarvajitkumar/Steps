@@ -16,27 +16,12 @@ class HabitPage extends Component {
       }
     ]
   */
-  state = {
-    habits: []
-  }
-
   componentDidMount() {
-    this.props.dispatch(handleInitialData())
-      .then(({habits}) => {
-        this.setState({
-          habits
-        });
-      });
-  }
-
-  syncAddedHabit = (newHabit) => {
-    this.setState({
-      habits: [ ...this.state.habits, newHabit ]
-    })
+    this.props.dispatch(handleInitialData());
   }
 
   syncToggleHabit = (newHabit) => {
-    const newHabits = this.state.habits.map(habit => {
+    const newHabits = this.props.habits.map(habit => {
       if (habit._id === newHabit._id) return newHabit
       return habit;
     });
@@ -54,11 +39,9 @@ class HabitPage extends Component {
     return (
       <SplitPane split="vertical" minSize={180} primary="second" paneStyle={{overflow:"auto"}}>
         <HabitTable
-          habits={this.state.habits}
+          habits={this.props.habits}
           syncToggleHabit={this.syncToggleHabit} />
-        <HabitList
-          habits={this.state.habits}
-          syncAddedHabit={this.syncAddedHabit} />
+        <HabitList habits={this.props.habits} />
       </SplitPane>
     );
   }

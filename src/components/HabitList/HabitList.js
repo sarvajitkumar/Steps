@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import HabitListItem from './HabitListItem';
 import DataStore from 'nedb';
 import moment from 'moment';
+import { handleAddHabit } from '../../actions'
 
 let db;
 
@@ -19,14 +21,12 @@ class HabitList extends Component {
   }
 
   createHabit = (newHabitName) => {
-    if (newHabitName !== '') {
-      db.insert({
-        name: newHabitName,
-        dates: []
-      }, (err, habit) => {
-        this.props.syncAddedHabit(habit);
-      });
-    }
+    if (newHabitName === '') return;
+
+    this.props.dispatch(handleAddHabit({
+      name: newHabitName,
+      dates: []
+    }));
 
     this.setState({
       newHabitInputOpened: false
@@ -81,4 +81,4 @@ class HabitList extends Component {
   }
 }
 
-export default HabitList;
+export default connect()(HabitList);

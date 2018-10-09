@@ -1,7 +1,11 @@
-import { fetchHabits } from '../utils/api';
+import {
+  fetchHabits,
+  createHabit
+} from '../utils/api';
+
 import {
   RECEIVE_HABITS,
-  // ADD_HABIT,
+  ADD_HABIT,
   // UPDATE_HABIT
 } from '../constants/habitConstants';
 
@@ -24,10 +28,24 @@ function receiveHabits(habits) {
   }
 }
 
-// export const addHabit = habit => ({
-//   type: ADD_HABIT,
-//   habit
-// })
+export function handleAddHabit(habit) {
+  return (dispatch) => {
+    createHabit(habit)
+      .then(habit => {
+        dispatch(addHabit(habit))
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+}
+
+function addHabit(habit) {
+  return {
+    type: ADD_HABIT,
+    habit
+  }
+}
 
 // export const updateHabit = habit => ({
 //   type: UPDATE_HABIT,
