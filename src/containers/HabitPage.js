@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import HabitTable from '../components/HabitTable/HabitTable';
 import HabitList from '../components/HabitList/HabitList';
 import SplitPane from 'react-split-pane';
-import DataStore from 'nedb';
+import { handleInitialData } from '../actions';
 
-let db;
 
 class HabitPage extends Component {
   //habit schema
@@ -21,13 +21,12 @@ class HabitPage extends Component {
   }
 
   componentDidMount() {
-    db = new DataStore({
-      filename: 'steps/habitsData',
-      timestampData: true,
-      autoload: true
-    });
-
-    this.fetchHabits();
+    this.props.dispatch(handleInitialData())
+      .then(({habits}) => {
+        this.setState({
+          habits
+        });
+      });
   }
 
   syncAddedHabit = (newHabit) => {
@@ -47,16 +46,8 @@ class HabitPage extends Component {
     })
   }
 
-  fetchHabits() {
-    db.find({}).sort({ createdAt: 1 }).exec((err, data) => {
-      this.setState({
-        habits: data
-      });
-    });
-  }
-
   render() {
-    if (!this.state.habits.length) {
+    if (this.props.loading) {
       return <div>LOADING...</div>
     }
 
@@ -73,4 +64,11 @@ class HabitPage extends Component {
   }
 }
 
-export default HabitPage;
+function mapStateToProps({ habits }) {
+  return {
+    loading: !habits.length,
+    habits
+  }
+}
+
+export default connect(mapStateToProps)(HabitPage);

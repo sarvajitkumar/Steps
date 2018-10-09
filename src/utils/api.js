@@ -9,7 +9,7 @@ function loadDatabase() {
 }
 
 //fetch habits
-export function fetchInitialHabits() {
+export function fetchHabits() {
   return new Promise((res, rej) => {
     const db = loadDatabase();
 

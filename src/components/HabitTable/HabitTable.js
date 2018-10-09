@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import HabitRow from './HabitRow';
 import DateRow from './DateRow';
 import Moment from 'moment';
@@ -38,4 +39,4 @@ class HabitTable extends Component {
   }
 }
 
-export default HabitTable;
+export default connect()(HabitTable);
