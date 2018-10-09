@@ -1,27 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
-class DateRow extends Component {
-  render() {
-    const dates = this.props.dates;
+const DateRow = ({ dates }) => {
+  return (
+    <div className="date-row">
+      {dates.map((date, index) => {
+        const formattedDate = date.format("DD");
 
-    return (
-      <div className="date-row">
-        {dates.map((date, index) => {
-          const formattedDate = date.format('DD');
+        return (
+          <div key={`dateRow-date-${index}-${formattedDate}`}
+                className="dateRow-date">
+            <span className={`dateRow-date ${date.isSame(moment(), 'day') && 'date-is-today'}`}>
+              {formattedDate}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
-          return (
-            <div key={`dateRow-date-${index}-${formattedDate}`}
-                 className="dateRow-date">
-              <span className={`dateRow-date ${date.isSame(moment(), 'day') && 'date-is-today'}`}>
-                {formattedDate}
-              </span>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
+DateRow.propTypes = {
+  dates: PropTypes.arrayOf(PropTypes.instanceOf(moment)).isRequired
 }
 
 export default DateRow;

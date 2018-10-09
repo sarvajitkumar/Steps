@@ -8,7 +8,6 @@ function loadDatabase() {
   });
 }
 
-//fetch habits
 export function fetchHabits() {
   return new Promise((res, rej) => {
     const db = loadDatabase();
@@ -21,8 +20,6 @@ export function fetchHabits() {
   })
 }
 
-//we have to update the habits WITH the NEWLY updated habit
-//create habit
 export function createHabit({name, dates}) {
   return new Promise((res, rej) => {
     const db = loadDatabase();
@@ -34,7 +31,6 @@ export function createHabit({name, dates}) {
   })
 }
 
-//update habit
 export function _updateHabit({_id, name, dates}) {
   return new Promise((res, rej) => {
     const db = loadDatabase();
