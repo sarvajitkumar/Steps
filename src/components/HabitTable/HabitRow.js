@@ -4,10 +4,6 @@ import HabitBox from './HabitBox';
 import { handleUpdateHabit } from '../../actions';
 
 class HabitRow extends Component {
-  state = {
-    habit: this.props.habit
-  }
-
   toggleHabit = (date) => {
     if (date.isAfter(new Date())) return;
 
@@ -30,7 +26,7 @@ class HabitRow extends Component {
   }
 
   getBoxBackgroundColor(date) {
-    const habit = this.state.habit;
+    const habit = this.props.habit;
 
     if (date.isAfter(new Date())) {
       return 'grey';
