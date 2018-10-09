@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class HabitBox extends Component {
-  render() {
-    return (
-      <div className="habit-box"
-           style={{backgroundColor: this.props.backgroundColor}}
-           onClick={this.props.toggleHabit} />
-    );
-  }
+const HabitBox = (props) => {
+  return (
+    <div className="habit-box"
+          style={{backgroundColor: props.backgroundColor}}
+          onClick={props.onClick} />
+  );
+}
+
+HabitBox.propTypes = {
+  backgroundColor: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 }
 
 export default HabitBox;
