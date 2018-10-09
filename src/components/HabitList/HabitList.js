@@ -26,7 +26,8 @@ class HabitList extends Component {
   updateHabitName = (habit, newName) => {
     this.props.dispatch(handleUpdateHabit({
       _id: habit._id,
-      name: newName
+      name: newName,
+      dates: habit.dates
     }));
   }
 

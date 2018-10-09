@@ -19,9 +19,7 @@ class HabitTable extends Component {
     const range = moment.range(moment().subtract(15, 'days'), moment().add(15, 'days'));
     const dates = Array.from(range.by('days'));
 
-    this.setState({
-      dates
-    });
+    this.setState({ dates });
   }
 
   render() {
@@ -30,9 +28,9 @@ class HabitTable extends Component {
         {this.props.habits.map(habit => (
           <HabitRow key={`${habit.name}-row`}
                     habit={habit}
-                    dates={this.state.dates}
-                    syncToggleHabit={this.props.syncToggleHabit} />
+                    dates={this.state.dates} />
         ))}
+
         <DateRow dates={this.state.dates} />
       </div>
     );

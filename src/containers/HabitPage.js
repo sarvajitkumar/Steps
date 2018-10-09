@@ -5,30 +5,9 @@ import HabitList from '../components/HabitList/HabitList';
 import SplitPane from 'react-split-pane';
 import { handleInitialData } from '../actions';
 
-
 class HabitPage extends Component {
-  //habit schema
-  /*
-    habits: [
-      {
-        name: 'Exercise',
-        dates: ['03/12/2018', '03/13/2018']
-      }
-    ]
-  */
   componentDidMount() {
     this.props.dispatch(handleInitialData());
-  }
-
-  syncToggleHabit = (newHabit) => {
-    const newHabits = this.props.habits.map(habit => {
-      if (habit._id === newHabit._id) return newHabit
-      return habit;
-    });
-
-    this.setState({
-      habits: newHabits
-    })
   }
 
   render() {
@@ -38,9 +17,7 @@ class HabitPage extends Component {
 
     return (
       <SplitPane split="vertical" minSize={180} primary="second" paneStyle={{overflow:"auto"}}>
-        <HabitTable
-          habits={this.props.habits}
-          syncToggleHabit={this.syncToggleHabit} />
+        <HabitTable habits={this.props.habits} />
         <HabitList habits={this.props.habits} />
       </SplitPane>
     );
@@ -55,3 +32,13 @@ function mapStateToProps({ habits }) {
 }
 
 export default connect(mapStateToProps)(HabitPage);
+
+//habit schema
+/*
+  habits: [
+    {
+      name: 'Exercise',
+      dates: ['03/12/2018', '03/13/2018']
+    }
+  ]
+*/

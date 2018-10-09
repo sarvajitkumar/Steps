@@ -1,46 +1,28 @@
 import React, { Component } from 'react';
-import DataStore from 'nedb';
+import { connect } from 'react-redux';
 import HabitBox from './HabitBox';
-
-let db;
+import { handleUpdateHabit } from '../../actions';
 
 class HabitRow extends Component {
   state = {
     habit: this.props.habit
   }
 
-  componentDidMount() {
-    db = new DataStore({
-      filename: 'steps/habitsData',
-      timestampData: true,
-      autoload: true
-    });
-  }
-
   toggleHabit = (date) => {
     if (date.isAfter(new Date())) return;
 
+    const habit = this.props.habit;
     const formattedDate = date.format('MM/DD/YYYY');
-    const habit = this.state.habit;
     const hasCompleted = habit.dates.includes(formattedDate);
 
-    db.update({ _id: habit._id }, {
-      $set: {
-        dates: (hasCompleted ?
-          habit.dates.filter(date => date !== formattedDate) :
-          habit.dates.concat(formattedDate)
-        )
-      }
-    }, { returnUpdatedDocs: true },
-    (err, _, updatedHabit) => {
-      if (!err) {
-        this.setState({
-          habit: updatedHabit
-        });
-
-        this.props.syncToggleHabit(updatedHabit);
-      }
-    });
+    this.props.dispatch(handleUpdateHabit({
+      _id: habit._id,
+      name: habit.name,
+      dates: (hasCompleted ?
+        habit.dates.filter(date => date !== formattedDate) :
+        habit.dates.concat(formattedDate)
+      )
+    }));
   }
 
   checkHabitCompletion = (habit, date) => {
@@ -72,4 +54,4 @@ class HabitRow extends Component {
   }
 }
 
-export default HabitRow;
+export default connect()(HabitRow);

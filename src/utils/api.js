@@ -35,13 +35,14 @@ export function createHabit({name, dates}) {
 }
 
 //update habit
-export function _updateHabit({_id, name}) {
+export function _updateHabit({_id, name, dates}) {
   return new Promise((res, rej) => {
     const db = loadDatabase();
 
     db.update({ _id }, {
       $set: {
-        name
+        name,
+        dates
       }
     }, { returnUpdatedDocs: true },
     (err, _, habit) => {
