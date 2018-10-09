@@ -50,7 +50,7 @@ class HabitList extends Component {
       <div className="habit-list">
         {this.props.habits.map(habit => (
           <HabitListItem
-            key={habit._id}
+            key={`habit-list-item-${habit._id}`}
             name={habit.name}
             completionCount={this.getConsecutiveCount(habit.dates)}
             submitChange={(newName) => { this.updateHabitName(habit, newName)} } />
@@ -59,7 +59,7 @@ class HabitList extends Component {
           <div>
             <HabitListItem
               placeholder={"Exercise"}
-              autofocus={true}
+              autoFocus={true}
               name={this.state.newHabitName}
               submitChange={this.createHabit} />
           </div> :
