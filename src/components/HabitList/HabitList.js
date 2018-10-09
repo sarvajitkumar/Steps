@@ -1,40 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HabitListItem from './HabitListItem';
-import DataStore from 'nedb';
 import moment from 'moment';
-import { handleAddHabit } from '../../actions'
-
-let db;
+import { handleAddHabit, handleUpdateHabit } from '../../actions'
 
 class HabitList extends Component {
   state = {
     newHabitInputOpened: false
   }
 
-  componentDidMount() {
-    db = new DataStore({
-      filename: 'steps/habitsData',
-      timestampData: true,
-      autoload: true 
-    });
-  }
-
   createHabit = (newHabitName) => {
-    if (newHabitName === '') return;
+    if (newHabitName === '') {
+      this.setState({ newHabitInputOpened: false });
+      return;
+    }
 
     this.props.dispatch(handleAddHabit({
       name: newHabitName,
       dates: []
     }));
 
-    this.setState({
-      newHabitInputOpened: false
-    });
+    this.setState({ newHabitInputOpened: false });
   }
   
-  submitChangeName = (habit, newName) => {
-    db.update({ _id: habit._id }, { $set: { name: newName } });
+  updateHabitName = (habit, newName) => {
+    this.props.dispatch(handleUpdateHabit({
+      _id: habit._id,
+      name: newName
+    }));
   }
 
   getConsecutiveCount(dates) {
@@ -60,7 +53,7 @@ class HabitList extends Component {
             key={habit._id}
             name={habit.name}
             completionCount={this.getConsecutiveCount(habit.dates)}
-            submitChange={(newName) => { this.submitChangeName(habit, newName)} } />
+            submitChange={(newName) => { this.updateHabitName(habit, newName)} } />
         ))}
         {this.state.newHabitInputOpened ?
           <div>

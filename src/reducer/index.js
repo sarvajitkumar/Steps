@@ -1,10 +1,9 @@
 import {
   RECEIVE_HABITS,
   ADD_HABIT,
-  // UPDATE_HABIT
+  UPDATE_HABIT
 } from '../constants/habitConstants';
 
-//update
 //remove
 const rootReducer = (state = { habits: [] }, action) => {
   switch (action.type) {
@@ -16,14 +15,19 @@ const rootReducer = (state = { habits: [] }, action) => {
       return {
         habits: [...state.habits, action.habit]
       }
+    case UPDATE_HABIT:
+      const index = state.habits.findIndex(habit => habit._id === action.habit._id);
+
+      return {
+        habits: [
+          ...state.habits.slice(0, index),
+          action.habit,
+          ...state.habits.slice(index + 1)
+        ]
+      }
     default:
       return state;
   }
 }
-    // case UPDATE_HABIT:
-    //   return {
-    //     ...state,
-        //everything stays the same except the updated habit
-      // }
 
 export default rootReducer;

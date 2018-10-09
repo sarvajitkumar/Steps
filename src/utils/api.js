@@ -34,6 +34,21 @@ export function createHabit({name, dates}) {
   })
 }
 
-//add habit
 //update habit
+export function _updateHabit({_id, name}) {
+  return new Promise((res, rej) => {
+    const db = loadDatabase();
+
+    db.update({ _id }, {
+      $set: {
+        name
+      }
+    }, { returnUpdatedDocs: true },
+    (err, _, habit) => {
+      if (err) rej(err);
+      res(habit);
+    });
+  });
+}
+
 //remove habit
