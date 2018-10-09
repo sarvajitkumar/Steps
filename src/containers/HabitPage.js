@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import SplitPane from 'react-split-pane';
 import HabitTable from '../components/HabitTable/HabitTable';
 import HabitList from '../components/HabitList/HabitList';
-import SplitPane from 'react-split-pane';
 import { handleInitialData } from '../actions';
 
 class HabitPage extends Component {
@@ -32,13 +32,3 @@ function mapStateToProps({ habits }) {
 }
 
 export default connect(mapStateToProps)(HabitPage);
-
-//habit schema
-/*
-  habits: [
-    {
-      name: 'Exercise',
-      dates: ['03/12/2018', '03/13/2018']
-    }
-  ]
-*/
