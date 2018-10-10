@@ -53,6 +53,7 @@ class HabitList extends Component {
           <HabitListItem
             key={`habit-list-item-${habit._id}`}
             habit={habit}
+            name={habit.name}
             completionCount={this.getConsecutiveCount(habit.dates)}
             submitChange={(newName) => {this.updateHabitName(habit, newName)}} />
         ))}

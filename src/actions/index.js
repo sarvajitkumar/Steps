@@ -1,13 +1,15 @@
 import {
   fetchHabits,
   createHabit,
-  _updateHabit
+  _updateHabit,
+  deleteHabit
 } from '../utils/api';
 
 import {
   RECEIVE_HABITS,
   ADD_HABIT,
-  UPDATE_HABIT
+  UPDATE_HABIT,
+  REMOVE_HABIT
 } from '../constants/habitConstants';
 
 export function handleInitialData() {
@@ -64,5 +66,24 @@ function updateHabit(habit) {
   return {
     type: UPDATE_HABIT,
     habit
+  }
+}
+
+export function handleRemoveHabit(_id) {
+  return (dispatch) => {
+    deleteHabit(_id)
+      .then(() => {
+        dispatch(removeHabit(_id));
+      })
+      .catch(err => {
+        console.error(err);
+      })
+  }
+}
+
+function removeHabit(_id) {
+  return {
+    type: REMOVE_HABIT,
+    _id
   }
 }

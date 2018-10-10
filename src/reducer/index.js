@@ -1,7 +1,8 @@
 import {
   RECEIVE_HABITS,
   ADD_HABIT,
-  UPDATE_HABIT
+  UPDATE_HABIT,
+  REMOVE_HABIT
 } from '../constants/habitConstants';
 
 //remove
@@ -16,13 +17,22 @@ const rootReducer = (state = { habits: [] }, action) => {
         habits: [...state.habits, action.habit]
       }
     case UPDATE_HABIT:
-      const index = state.habits.findIndex(habit => habit._id === action.habit._id);
+      const updateIndex = state.habits.findIndex(habit => habit._id === action.habit._id);
 
       return {
         habits: [
-          ...state.habits.slice(0, index),
+          ...state.habits.slice(0, updateIndex),
           action.habit,
-          ...state.habits.slice(index + 1)
+          ...state.habits.slice(updateIndex + 1)
+        ]
+      }
+    case REMOVE_HABIT:
+      const removeIndex = state.habits.findIndex(habit => habit._id === action._id);
+
+      return {
+        habits: [
+          ...state.habits.slice(0, removeIndex),
+          ...state.habits.slice(removeIndex + 1)
         ]
       }
     default:

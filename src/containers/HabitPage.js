@@ -11,9 +11,9 @@ class HabitPage extends Component {
   }
 
   render() {
-    if (this.props.loading) {
-      return <div>LOADING...</div>
-    }
+    // if (this.props.loading) {
+    //   return <div>LOADING...</div>
+    // }
 
     return (
       <SplitPane split="vertical" minSize={180} primary="second" paneStyle={{overflow:"auto"}}>

@@ -3,7 +3,7 @@ import HabitListItemSettings from './HabitListItemSettings';
 
 class HabitListInput extends Component {
   state = {
-    name: this.props.habit.name || ''
+    name: this.props.name || ''
   }
 
   handleInputChange = (evt) => {

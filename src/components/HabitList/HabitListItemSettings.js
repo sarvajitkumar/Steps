@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { handleRemoveHabit } from '../../actions';
 
 class HabitListItemSettings extends Component {
   componentWillMount() {
@@ -19,6 +21,10 @@ class HabitListItemSettings extends Component {
     }
   }
 
+  handleDelete = () => {
+    this.props.dispatch(handleRemoveHabit(this.props.habit._id))
+  }
+
   render() {
     const { habit, style } = this.props;
 
@@ -35,4 +41,4 @@ class HabitListItemSettings extends Component {
   }
 }
 
-export default HabitListItemSettings;
+export default connect()(HabitListItemSettings);
