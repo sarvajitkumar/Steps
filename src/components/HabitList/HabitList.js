@@ -52,9 +52,9 @@ class HabitList extends Component {
         {this.props.habits.map(habit => (
           <HabitListItem
             key={`habit-list-item-${habit._id}`}
-            name={habit.name}
+            habit={habit}
             completionCount={this.getConsecutiveCount(habit.dates)}
-            submitChange={(newName) => { this.updateHabitName(habit, newName)} } />
+            submitChange={(newName) => {this.updateHabitName(habit, newName)}} />
         ))}
         {this.state.newHabitInputOpened ?
           <div>

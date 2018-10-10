@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import HabitListItemSettings from './HabitListItemSettings';
 
 class HabitListInput extends Component {
   state = {
-    name: this.props.name || ''
+    name: this.props.habit.name || ''
   }
 
   handleInputChange = (evt) => {
@@ -22,22 +23,50 @@ class HabitListInput extends Component {
     this.props.submitChange(this.state.name);
   }
 
+  openHabitSettings = (e) => {
+    const { offsetTop, offsetWidth } = e.target.parentElement;
+    const habitSettingsStyles = {
+      top: offsetTop + 35,
+      width: offsetWidth
+    }
+
+    this.setState({
+      showSettings: true,
+      habitSettingsStyles
+    });
+  }
+
+  closeHabitSettings = () => {
+    this.setState({showSettings: false})
+  }
+
   render() {
+    const { id, habit, autoFocus, placeholder, completionCount } = this.props;
+
     return (
-      <div className="habit-list-item">
+      <div id={id} className="habit-list-item">
         <input type="text"
                className="habit-list-item-input"
                ref={(input) => { this.nameInput = input; }} 
-               autoFocus={this.props.autoFocus}
-               placeholder={this.props.placeholder}
+               autoFocus={autoFocus}
+               placeholder={placeholder}
                value={this.state.name}
                onChange={this.handleInputChange}
                onKeyPress={this.handleKeyPress}
                onBlur={this.handleBlur} />
 
         <span className="habit-list-item-info">
-          {this.props.completionCount}{"✓"}
+          {completionCount}{"✓"}
         </span>
+
+        <span onClick={this.openHabitSettings}>
+          ...
+        </span>
+        {this.state.showSettings &&
+          <HabitListItemSettings
+            habit={habit}
+            close={this.closeHabitSettings}
+            style={this.state.habitSettingsStyles}/> }
       </div>
     );
   }
