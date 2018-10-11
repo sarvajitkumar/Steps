@@ -14,7 +14,6 @@ class HabitListInput extends Component {
 
   handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      this.props.submitChange(this.state.name);
       this.nameInput.blur();
     }
   }
