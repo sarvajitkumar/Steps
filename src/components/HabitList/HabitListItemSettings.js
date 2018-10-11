@@ -33,8 +33,21 @@ class HabitListItemSettings extends Component {
            className="habit-settings-container"
            style={style}>
         <div className="habit-settings">
-          {habit.name}
-          <button onClick={this.handleDelete}>DELETE</button>
+          <div className="habit-settings-header">{habit.name}</div>
+          <div className="habit-settings-reminders">
+            <div>Repeat</div>
+            <div>Reminder</div>
+            <div>Weekly Target</div>
+          </div>
+          <div className="habit-settings-streaks">
+            <div>Current Streak: 3</div>
+            <div>Longest Streak: 4</div>
+            <div>Total Completions: 5</div>
+            <div>Weekly Completions: 6</div>
+          </div>
+          <div className="habit-settings-footer">
+            <button onClick={this.handleDelete}>DELETE</button>
+          </div>
         </div>
       </div>
     )

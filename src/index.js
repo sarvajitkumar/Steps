@@ -5,7 +5,7 @@ import store from './store';
 import './index.css';
 import './styles/Resizer.css';
 import './components/HabitTable/style.css';
-import './components/HabitList/style.css';
+import './components/HabitList/style.scss';
 import App from './containers/App';
 import * as serviceWorker from './utils/serviceWorker';
 
