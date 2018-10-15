@@ -9,6 +9,7 @@ const iconPath = path.join(__dirname, 'stairs.png')
 const isDev = require('electron-is-dev');
 
 let mainWindow;
+let aboutWindow;
 let tray;
 let menu;
 
@@ -42,9 +43,37 @@ function toggleWindow() {
   }
 }
 
+function createAboutWindow() {
+  aboutWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    show: false,
+    center: true,
+    alwaysOnTop: true,
+    title: "",
+    minimizable: false,
+    maximizable: false,
+    fullscreenable: false,
+    resizable: false,
+    backgroundColor: "#eee"
+  });
+  aboutWindow.loadURL(
+    isDev
+      ? "http://localhost:3000/about.html"
+      : `file://${path.join(__dirname, "../build/about.html")}`
+  );
+  aboutWindow.on('close', (e) => {
+    e.preventDefault();
+    aboutWindow.hide();
+  });
+}
+
 const menuTemplate = [
   {
-    label: "About Steps"
+    label: "About Steps",
+    click: () => {
+      aboutWindow.show();
+    }
   },
   {
     type: "separator"
@@ -83,7 +112,6 @@ function createTray() {
   })
 }
 
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -105,6 +133,7 @@ function createWindow() {
 
 app.on('ready', () => {
   createMenu();
+  createAboutWindow();
   createTray();
   createWindow();
 });
