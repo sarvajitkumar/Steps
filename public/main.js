@@ -1,10 +1,16 @@
-const { app, BrowserWindow, Tray } = require('electron');
+const {
+  app,
+  BrowserWindow,
+  Tray,
+  Menu,
+} = require('electron');
 const path = require('path');
 const iconPath = path.join(__dirname, 'stairs.png')
 const isDev = require('electron-is-dev');
 
 let mainWindow;
 let tray;
+let menu;
 
 function getWindowPosition() {
   const windowBounds = mainWindow.getBounds();
@@ -36,12 +42,47 @@ function toggleWindow() {
   }
 }
 
+const menuTemplate = [
+  {
+    label: "About Steps"
+  },
+  {
+    type: "separator"
+  },
+  {
+    label: "Preferences",
+    accelerator: "Cmd+,",
+    click: () => {
+      console.log('open preferences');
+    }
+  },
+  {
+    type: "separator"
+  },
+  {
+    label: "Quit Steps",
+    accelerator: "Cmd+Q",
+    click: () => {
+      mainWindow.close();
+    }
+  }
+]
+
+function createMenu() {
+  menu = new Menu.buildFromTemplate(menuTemplate);
+}
+
 function createTray() {
   tray = new Tray(iconPath);
+
   tray.on("click", () => {
     toggleWindow();
+  });
+  tray.on("right-click", () => {
+    tray.popUpContextMenu(menu);
   })
 }
+
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -63,6 +104,7 @@ function createWindow() {
 }
 
 app.on('ready', () => {
+  createMenu();
   createTray();
   createWindow();
 });
