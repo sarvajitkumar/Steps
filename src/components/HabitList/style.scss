@@ -38,6 +38,10 @@
   border-radius: 5px;
   padding: 5px;
 
+  .habit-settings-header {
+    text-align: center;
+  }
+
   > :not(.habit-settings-header) {
     font-size: 10px;
   }

@@ -116,8 +116,8 @@ function createTray() {
 
 function createSettingsChildWindow() {
   settingsChildWindow = new BrowserWindow({
-    width: 300,
-    height: 400,
+    width: 160,
+    height: 172,
     show: false,
     frame: false,
     parent: mainWindow,
@@ -133,7 +133,7 @@ function createSettingsChildWindow() {
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 300,
+    height: 248,
     show: false,
     frame: false,
     resizable: false,
