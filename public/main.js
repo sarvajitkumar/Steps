@@ -153,7 +153,7 @@ function createWindow() {
   });
 }
 
-function setIpcMainListener() {
+function setIpcListeners() {
   ipcMain.on('open-habit-settings', (_, arg) => {
     settingsChildWindow.loadURL(
       isDev
@@ -167,9 +167,14 @@ function setIpcMainListener() {
     settingsChildWindow.setPosition(x, y);
     settingsChildWindow.show();
 
-    settingsChildWindow.webContents.on('dom-ready', () => {
+    settingsChildWindow.webContents.on('did-finish-load', () => {
       settingsChildWindow.webContents.send('habit-data', arg)
     });
+  });
+
+  ipcMain.on('handle-settings-delete-click', () => {
+    mainWindow.webContents.send('reload-db');
+    settingsChildWindow.hide();
   });
 }
 
@@ -179,7 +184,7 @@ app.on('ready', () => {
   createTray();
   createWindow();
   createSettingsChildWindow();
-  setIpcMainListener();
+  setIpcListeners();
 });
 
 app.dock.hide();

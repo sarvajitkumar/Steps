@@ -4,10 +4,16 @@ import SplitPane from 'react-split-pane';
 import HabitTable from '../components/HabitTable/HabitTable';
 import HabitList from '../components/HabitList/HabitList';
 import { handleInitialData } from '../actions';
+const { ipcRenderer } = window.require('electron');
 
 class HabitPage extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData());
+
+    ipcRenderer.on('reload-db', () => {
+      this.props.dispatch(handleInitialData())
+      this.forceUpdate();
+    });
   }
 
   render() {

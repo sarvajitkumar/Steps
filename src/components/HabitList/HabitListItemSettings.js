@@ -8,7 +8,7 @@ class HabitListItemSettings extends Component {
     habit: null
   }
 
-  componentWillMount() {
+  componentDidMount() {
     ipcRenderer.on('habit-data', (_, habit) => {
       this.setState({ habit });
     });
@@ -21,7 +21,13 @@ class HabitListItemSettings extends Component {
   }
 
   handleDelete = () => {
-    this.props.dispatch(handleRemoveHabit(this.props.habit._id))
+    this.props.dispatch(handleRemoveHabit(this.state.habit._id));
+  
+    setTimeout(
+      () => {
+        ipcRenderer.send('handle-settings-delete-click');
+      }, 200
+    )
   }
 
   render() {

@@ -48,7 +48,6 @@ export function _updateHabit({_id, name, dates}) {
   });
 }
 
-//remove habit
 export function deleteHabit(_id) {
   return new Promise((res, rej) => {
     const db = loadDatabase();
