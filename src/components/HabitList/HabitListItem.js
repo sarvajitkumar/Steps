@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import HabitListItemSettings from './HabitListItemSettings';
+const { ipcRenderer } = window.require('electron');
 
 class HabitListInput extends Component {
   state = {
@@ -23,16 +24,19 @@ class HabitListInput extends Component {
   }
 
   openHabitSettings = (e) => {
-    const { offsetTop, offsetWidth } = e.target.parentElement;
-    const habitSettingsStyles = {
-      top: offsetTop + 35,
-      width: offsetWidth
-    }
+    console.log('sent?');
+    ipcRenderer.send('open-habit-settings', 'ping');
 
-    this.setState({
-      showSettings: true,
-      habitSettingsStyles
-    });
+    // const { offsetTop, offsetWidth } = e.target.parentElement;
+    // const habitSettingsStyles = {
+    //   top: offsetTop + 35,
+    //   width: offsetWidth
+    // }
+
+    // this.setState({
+    //   showSettings: true,
+    //   habitSettingsStyles
+    // });
   }
 
   closeHabitSettings = () => {

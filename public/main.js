@@ -3,12 +3,14 @@ const {
   BrowserWindow,
   Tray,
   Menu,
+  ipcMain
 } = require('electron');
 const path = require('path');
 const iconPath = path.join(__dirname, 'stairs.png')
 const isDev = require('electron-is-dev');
 
 let mainWindow;
+let settingsChildWindow;
 let aboutWindow;
 let tray;
 let menu;
@@ -112,22 +114,56 @@ function createTray() {
   })
 }
 
+function createSettingsChildWindow() {
+  settingsChildWindow = new BrowserWindow({
+    width: 300,
+    height: 400,
+    show: false,
+    frame: false,
+    parent: mainWindow,
+    resizable: false,
+    focus: true
+  });
+  settingsChildWindow.loadURL(
+    isDev
+      ? "http://localhost:3000"
+      : `file://${path.join(__dirname, "../build/index.html")}`
+  );
+  settingsChildWindow.on('blur', () => {
+    settingsChildWindow.hide();
+  });
+}
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 300,
     show: false,
-    frame: false
+    frame: false,
+    resizable: false,
+    minimizable: false,
+    maximizable: false,
+    alwaysOnTop: true,
   });
-
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-
   mainWindow.on('blur', () => {
-    mainWindow.hide();
+    if (!settingsChildWindow.isVisible()) {
+      mainWindow.hide();
+    }
+  });
+}
+
+function setIpcMainListener() {
+  ipcMain.on('open-habit-settings', (_, arg) => {
+    const { screen } = require('electron');
+    const { x, y } = screen.getCursorScreenPoint();
+
+    settingsChildWindow.setPosition(x, y);
+    settingsChildWindow.show();
   });
 }
 
@@ -136,6 +172,8 @@ app.on('ready', () => {
   createAboutWindow();
   createTray();
   createWindow();
+  createSettingsChildWindow();
+  setIpcMainListener();
 });
 
 app.dock.hide();
