@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleRemoveHabit } from '../../actions';
+const { ipcRenderer } = window.require('electron');
 
 class HabitListItemSettings extends Component {
+  state = {
+    habit: null
+  }
+
   componentWillMount() {
-    document.body.addEventListener('click', this.handleOutsideClick.bind(this), false);
-  }
-
-  componentWillUnmount() {
-    document.body.removeEventListener('click', this.handleOutsideClick.bind(this), false);
-  }
-
-  setWrapperRef = (node) => {
-    this.wrapperRef = node;
+    ipcRenderer.on('habit-data', (_, habit) => {
+      this.setState({ habit });
+    });
   }
 
   handleOutsideClick = (event) => {
@@ -26,12 +25,11 @@ class HabitListItemSettings extends Component {
   }
 
   render() {
-    const { habit, style } = this.props;
+    const { habit } = this.state;
+    if (!habit) return <div>Loading...</div>
 
     return (
-      <div ref={this.setWrapperRef}
-           className="habit-settings-container"
-           style={style}>
+      <div className="habit-settings-container">
         <div className="habit-settings">
           <div className="habit-settings-header">{habit.name}</div>
           <div className="habit-settings-reminders">

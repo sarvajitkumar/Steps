@@ -124,13 +124,9 @@ function createSettingsChildWindow() {
     resizable: false,
     focus: true
   });
-  settingsChildWindow.loadURL(
-    isDev
-      ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "../build/index.html")}`
-  );
   settingsChildWindow.on('blur', () => {
     settingsChildWindow.hide();
+    mainWindow.focus();
   });
 }
 
@@ -159,11 +155,21 @@ function createWindow() {
 
 function setIpcMainListener() {
   ipcMain.on('open-habit-settings', (_, arg) => {
+    settingsChildWindow.loadURL(
+      isDev
+        ? 'http://localhost:3000/habit-settings'
+        : `file://${path.join(__dirname, "../build/index.html/habit-settings")}`
+    );
+
     const { screen } = require('electron');
     const { x, y } = screen.getCursorScreenPoint();
 
     settingsChildWindow.setPosition(x, y);
     settingsChildWindow.show();
+
+    settingsChildWindow.webContents.on('dom-ready', () => {
+      settingsChildWindow.webContents.send('habit-data', arg)
+    });
   });
 }
 

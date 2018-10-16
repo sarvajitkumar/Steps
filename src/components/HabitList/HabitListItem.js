@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import HabitListItemSettings from './HabitListItemSettings';
 const { ipcRenderer } = window.require('electron');
 
 class HabitListInput extends Component {
@@ -23,31 +22,15 @@ class HabitListInput extends Component {
     this.props.submitChange(this.state.name);
   }
 
-  openHabitSettings = (e) => {
-    console.log('sent?');
-    ipcRenderer.send('open-habit-settings', 'ping');
-
-    // const { offsetTop, offsetWidth } = e.target.parentElement;
-    // const habitSettingsStyles = {
-    //   top: offsetTop + 35,
-    //   width: offsetWidth
-    // }
-
-    // this.setState({
-    //   showSettings: true,
-    //   habitSettingsStyles
-    // });
-  }
-
-  closeHabitSettings = () => {
-    this.setState({showSettings: false})
+  openHabitSettings = (habitData) => {
+    ipcRenderer.send('open-habit-settings', habitData);
   }
 
   render() {
-    const { id, habit, autoFocus, placeholder, completionCount } = this.props;
+    const { habit, autoFocus, placeholder, completionCount } = this.props;
 
     return (
-      <div id={id} className="habit-list-item">
+      <div className="habit-list-item">
         <input type="text"
                className="habit-list-item-input"
                ref={(input) => { this.nameInput = input; }} 
@@ -62,14 +45,9 @@ class HabitListInput extends Component {
           {completionCount}{"✓"}
         </span>
 
-        <span onClick={this.openHabitSettings}>
+        <span onClick={() => {this.openHabitSettings(habit)}}>
           ...
         </span>
-        {this.state.showSettings &&
-          <HabitListItemSettings
-            habit={habit}
-            close={this.closeHabitSettings}
-            style={this.state.habitSettingsStyles}/> }
       </div>
     );
   }
