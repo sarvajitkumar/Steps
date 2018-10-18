@@ -10,6 +10,7 @@ import './components/HabitList/style.scss';
 import App from './containers/App';
 import * as serviceWorker from './utils/serviceWorker';
 import HabitListItemSettings from './components/HabitList/HabitListItemSettings';
+import Preferences from './containers/Preferences';
 
 render(
   <Provider store={store}>
@@ -17,6 +18,7 @@ render(
       <Fragment>
         <Route exact path="/" component={App} />
         <Route path="/habit-settings" component={HabitListItemSettings} />
+        <Route path="/preferences" component={Preferences} />
       </Fragment>
     </Router>
   </Provider>,

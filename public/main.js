@@ -11,6 +11,7 @@ const isDev = require('electron-is-dev');
 
 let mainWindow;
 let settingsChildWindow;
+let preferencesWindow;
 let aboutWindow;
 let tray;
 let menu;
@@ -52,7 +53,7 @@ function createAboutWindow() {
     show: false,
     center: true,
     alwaysOnTop: true,
-    title: "",
+    title: "About",
     minimizable: false,
     maximizable: false,
     fullscreenable: false,
@@ -70,6 +71,31 @@ function createAboutWindow() {
   });
 }
 
+function createPreferencesWindow() {
+  preferencesWindow = new BrowserWindow({
+    width: 300,
+    height: 300,
+    show: false,
+    center: true,
+    alwaysOnTop: true,
+    title: "Preferences",
+    minimizable: false,
+    maximizable: false,
+    fullscreenable: false,
+    resizable: false,
+    backgroundColor: "#eee"
+  });
+  preferencesWindow.loadURL(
+    isDev
+      ? "http://localhost:3000/preferences"
+      : `file://${path.join(__dirname, "../build/index.html/preferences")}`
+  );
+  preferencesWindow.on('close', (e) => {
+    e.preventDefault();
+    preferencesWindow.hide();
+  });
+}
+
 const menuTemplate = [
   {
     label: "About Steps",
@@ -84,7 +110,7 @@ const menuTemplate = [
     label: "Preferences",
     accelerator: "Cmd+,",
     click: () => {
-      console.log('open preferences');
+      preferencesWindow.show();
     }
   },
   {
@@ -181,6 +207,7 @@ function setIpcListeners() {
 app.on('ready', () => {
   createMenu();
   createAboutWindow();
+  createPreferencesWindow();
   createTray();
   createWindow();
   createSettingsChildWindow();
