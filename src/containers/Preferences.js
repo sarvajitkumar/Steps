@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   getPreferences,
   updatePreference,
-} from '../utils/preferencesApi';
+} from '../utils/api/preferencesApi';
 
 class Preferences extends Component {
   state = {

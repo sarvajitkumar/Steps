@@ -3,7 +3,7 @@ import {
   createHabit,
   _updateHabit,
   deleteHabit
-} from '../utils/api';
+} from '../utils/api/habitsApi';
 
 import {
   RECEIVE_HABITS,
