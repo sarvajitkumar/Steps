@@ -4,6 +4,7 @@ import HabitRow from './HabitRow';
 import DateRow from './DateRow';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
+import { css } from 'emotion';
 
 class HabitTable extends Component {
   state = {
@@ -24,7 +25,7 @@ class HabitTable extends Component {
 
   render() {
     return (
-      <div className="habit-table">
+      <div className={css`position:absolute;`}>
         {this.props.habits.map(habit => (
           <HabitRow key={`${habit.name}-row`}
                     habit={habit}

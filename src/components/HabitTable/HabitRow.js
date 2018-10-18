@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HabitBox from './HabitBox';
 import { handleUpdateHabit } from '../../actions';
+import { css } from 'emotion';
 
 class HabitRow extends Component {
   toggleHabit = (date) => {
@@ -35,7 +36,7 @@ class HabitRow extends Component {
 
   render() {
     return (
-      <div className="habit-row">
+      <div className={css`display:flex;`}>
         {this.props.dates.map(date => (
           <HabitBox key={`habit-box-${date.format("MM/DD")}`}
                     onClick={() => {this.toggleHabit(date)}}
