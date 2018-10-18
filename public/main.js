@@ -74,7 +74,7 @@ function createAboutWindow() {
 function createPreferencesWindow() {
   preferencesWindow = new BrowserWindow({
     width: 300,
-    height: 300,
+    height: 180,
     show: false,
     center: true,
     alwaysOnTop: true,
@@ -82,8 +82,7 @@ function createPreferencesWindow() {
     minimizable: false,
     maximizable: false,
     fullscreenable: false,
-    // resizable: false,
-    backgroundColor: "#eee"
+    resizable: false,
   });
   preferencesWindow.loadURL(
     isDev

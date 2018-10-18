@@ -3,6 +3,7 @@ import {
   getPreferences,
   updatePreference,
 } from '../utils/api/preferencesApi';
+import '../styles/Preferences.scss'
 
 class Preferences extends Component {
   state = {
@@ -62,31 +63,37 @@ class Preferences extends Component {
     } = this.state;
 
     return (
-      <div>
-        <div>
-          Start Date:
-          <input type="date" name="startDateToDisplay" value={startDateToDisplay} onChange={this.handleChange} />
+      <div className="preferences">
+        <div className="row">
+          <label>Start Date:</label>
+          <div>
+            <input type="date" name="startDateToDisplay" value={startDateToDisplay} onChange={this.handleChange} />
+          </div>
         </div>
-        <div>
-          Daily Reminder:
-          <input type="checkbox" name="dailyReminderOn" checked={dailyReminderOn} onChange={this.handleCheckClick} />
-          <input type="date"
-            disabled={!dailyReminderOn}
-            name="dailyReminderTime"
-            value={dailyReminderTime}
-            onChange={this.handleChange} />
+        <div className="row">
+          <label>Daily Reminder:</label>
+          <div>
+            <input type="checkbox" name="dailyReminderOn" checked={dailyReminderOn} onChange={this.handleCheckClick} />
+            <input type="date"
+              disabled={!dailyReminderOn}
+              name="dailyReminderTime"
+              value={dailyReminderTime}
+              onChange={this.handleChange} />
+          </div>
         </div>
-        <div>
-          Sounds:
+        <div className="row">
+          <label>Sounds:</label>
           <input type="checkbox" name="soundsOn" checked={soundsOn} onChange={this.handleCheckClick} />
         </div>
-        <div>
-          Launch At Login:
+        <div className="row">
+          <label>Launch At Login:</label>
           <input type="checkbox" name="launchAtLogin" checked={launchAtLogin} onChange={this.handleCheckClick} />
         </div>
-        <div>
-          Window With:
-          <input type="range" step="50" min="300" max="1000" name="windowWidth" value={windowWidth} onChange={this.handleChange} />
+        <div className="row">
+          <label>Window With:</label>
+          <div>
+            <input type="range" step="50" min="300" max="1000" name="windowWidth" value={windowWidth} onChange={this.handleChange} />
+          </div>
         </div>
       </div>
     );
