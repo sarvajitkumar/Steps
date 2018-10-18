@@ -1,17 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { css } from 'emotion';
+
+const dateRowStyles = css`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+`;
+
+const dateRowDateStyles = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 10px;
+  border-right: 1px solid #ccc;
+`;
+
+const dateRowDateIsTodayStyles = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+`;
 
 const DateRow = ({ dates }) => {
   return (
-    <div className="date-row">
+    <div className={dateRowStyles}>
       {dates.map((date, index) => {
         const formattedDate = date.format("DD");
 
         return (
           <div key={`dateRow-date-${index}-${formattedDate}`}
-               className="dateRow-date">
-            <span className={`dateRow-date ${date.isSame(moment(), 'day') && 'date-is-today'}`}>
+               className={dateRowDateStyles}>
+            <span className={date.isSame(moment(), 'day') && dateRowDateIsTodayStyles}>
               {formattedDate}
             </span>
           </div>
