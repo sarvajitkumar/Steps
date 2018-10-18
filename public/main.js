@@ -82,7 +82,7 @@ function createPreferencesWindow() {
     minimizable: false,
     maximizable: false,
     fullscreenable: false,
-    resizable: false,
+    // resizable: false,
     backgroundColor: "#eee"
   });
   preferencesWindow.loadURL(
