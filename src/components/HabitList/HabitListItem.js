@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 const { ipcRenderer } = window.require('electron');
 
-class HabitListInput extends Component {
+class HabitListItem extends Component {
   state = {
     name: this.props.name || ''
   }
@@ -53,4 +53,4 @@ class HabitListInput extends Component {
   }
 }
 
-export default HabitListInput;
+export default HabitListItem;
