@@ -3,7 +3,34 @@ import {
   getPreferences,
   updatePreference,
 } from '../utils/api/preferencesApi';
-import '../styles/Preferences.scss'
+import { css } from 'emotion';
+
+const preferencesStyles = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #eee;
+  font-size: 12px;
+  padding: 5px 0;
+
+  .row {
+    display: flex;
+    justify-content: center;
+    padding: 5px 0;
+
+    label {
+      text-align: right;
+      flex: 0.42;
+    }
+
+    >:not(label) {
+      flex: 0.58;
+      text-align: left;
+      margin-left: 3px;
+    }
+  }
+`;
 
 class Preferences extends Component {
   state = {
@@ -63,7 +90,7 @@ class Preferences extends Component {
     } = this.state;
 
     return (
-      <div className="preferences">
+      <div className={preferencesStyles}>
         <div className="row">
           <label>Start Date:</label>
           <div>
