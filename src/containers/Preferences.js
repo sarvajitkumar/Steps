@@ -88,7 +88,6 @@ class Preferences extends Component {
           Window With:
           <input type="range" step="50" min="300" max="1000" name="windowWidth" value={windowWidth} onChange={this.handleChange} />
         </div>
-
       </div>
     );
   }

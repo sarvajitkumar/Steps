@@ -14,12 +14,6 @@ class HabitListItemSettings extends Component {
     });
   }
 
-  handleOutsideClick = (event) => {
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      this.props.close();
-    }
-  }
-
   handleDelete = () => {
     this.props.dispatch(handleRemoveHabit(this.state.habit._id));
   
