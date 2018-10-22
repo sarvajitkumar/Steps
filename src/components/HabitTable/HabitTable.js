@@ -14,9 +14,11 @@ class HabitTable extends Component {
 
   componentDidMount() {
     getPreferences().then((preferences) => {
-      const startDate = preferences.find(preference => preference.name === 'startDateToDisplay')
+      const startDate = preferences.find(p => p.name === 'startDateToDisplay')
 
-      if (startDate) {
+      //has to have a start date value since
+      //the user may have not opened the preferences window and saved a start date
+      if (startDate && startDate.value) {
         this.setDates(startDate.value);
       } else {
         this.setDates(Moment().subtract(15, 'days'));

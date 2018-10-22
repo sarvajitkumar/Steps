@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {
   getPreferences,
-  updatePreference,
+  updatePreference
 } from '../utils/api/preferencesApi';
 import { css } from 'emotion';
+import moment from 'moment';
 
 const preferencesStyles = css`
   display: flex;
@@ -34,12 +35,12 @@ const preferencesStyles = css`
 
 class Preferences extends Component {
   state = {
-    startDateToDisplay: "",
+    startDateToDisplay: moment().subtract(15, 'days').format('YYYY-MM-DD'),
     dailyReminderOn: false,
     dailyReminderTime: "",
     soundsOn: false,
     launchAtLogin: false,
-    windowWidth: null
+    windowWidth: "650" 
   }
 
   componentDidMount() {
@@ -47,9 +48,13 @@ class Preferences extends Component {
       if (!preferences.length) return;
 
       preferences.forEach(preference => {
-        this.setState({
-          [preference.name]: preference.value
-        });
+        //this is for strings used for the startDate
+        if (preference && preference.value === "") {
+        } else {
+          this.setState({
+            [preference.name]: preference.value
+          });
+        }
       });
     });
   }
