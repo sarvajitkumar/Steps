@@ -39,7 +39,7 @@ const DateRow = ({ dates }) => {
         return (
           <div key={`dateRow-date-${index}-${formattedDate}`}
                className={dateRowDateStyles}>
-            <span className={date.isSame(moment(), 'day') && dateRowDateIsTodayStyles}>
+            <span className={date.isSame(moment(), 'day') ? dateRowDateIsTodayStyles : ""}>
               {formattedDate}
             </span>
           </div>

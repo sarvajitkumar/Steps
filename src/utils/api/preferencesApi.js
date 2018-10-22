@@ -28,8 +28,3 @@ export function updatePreference(name, field) {
       });
   });
 }
-
-// export function remove() {
-//   const db = new loadDatabase();
-//   db.remove({}, { multi: true})
-// }

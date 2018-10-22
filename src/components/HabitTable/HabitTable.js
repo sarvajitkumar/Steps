@@ -5,19 +5,28 @@ import DateRow from './DateRow';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import { css } from 'emotion';
+import { getPreferences } from '../../utils/api/preferencesApi';
 
 class HabitTable extends Component {
   state = {
     dates: []
   }
 
-  componentWillMount() {
-    this.getDates();
+  componentDidMount() {
+    getPreferences().then((preferences) => {
+      const startDate = preferences.find(preference => preference.name === 'startDateToDisplay')
+
+      if (startDate) {
+        this.setDates(startDate.value);
+      } else {
+        this.setDates(Moment().subtract(15, 'days'));
+      }
+    })
   }
 
-  getDates() {
+  setDates(startDate) {
     const moment = extendMoment(Moment);
-    const range = moment.range(moment().subtract(15, 'days'), moment().add(15, 'days'));
+    const range = moment.range(moment(startDate), moment().add(15, 'days'));
     const dates = Array.from(range.by('days'));
 
     this.setState({ dates });
@@ -25,7 +34,7 @@ class HabitTable extends Component {
 
   render() {
     return (
-      <div className={css`position:absolute;`}>
+      <div className={css`position: absolute`}>
         {this.props.habits.map(habit => (
           <HabitRow key={`${habit.name}-row`}
                     habit={habit}
