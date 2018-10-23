@@ -26,11 +26,11 @@ class HabitRow extends Component {
     const habitHasDate = this.props.habit.dates.includes(date.format("MM/DD/YYYY"));
 
     if (date.isAfter(new Date())) {
-      return 'grey';
+      return '#cccccc';
     } else if (habitHasDate) {
-      return 'green';
+      return '#1bbd49';
     } else {
-      return 'darkgrey';
+      return '#a6a6a6';
     }
   }
 

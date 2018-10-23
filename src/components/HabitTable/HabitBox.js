@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { css } from 'emotion';
 
 const habitBoxStyles = css`
-  width: 30px;
-  height: 30px;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
+  width: 36px;
+  height: 35px;
+  border-bottom: 1px solid #999999;
+  border-right: 1px solid #999999;
   cursor: pointer;
 
   &:hover {

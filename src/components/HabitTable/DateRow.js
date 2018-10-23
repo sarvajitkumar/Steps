@@ -6,17 +6,16 @@ import { css } from 'emotion';
 const dateRowStyles = css`
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #ccc;
 `;
 
 const dateRowDateStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 35px;
   font-size: 10px;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid transparent;
 `;
 
 const dateRowDateIsTodayStyles = css`
