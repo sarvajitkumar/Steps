@@ -69,9 +69,8 @@ class HabitListItem extends Component {
                onKeyPress={this.handleKeyPress}
                onBlur={this.handleBlur} />
 
-        <span className={css``}>
-          {completionCount}{"✓"}
-        </span>
+        <span>{completionCount}</span>
+        <span className={css`color:#1bbd49;`}>✓</span>
 
         <span onClick={() => {this.openHabitSettings(habit)}}>
           ...
