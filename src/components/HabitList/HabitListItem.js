@@ -31,7 +31,8 @@ const habitListItemInputStyles = css`
 
 class HabitListItem extends Component {
   state = {
-    name: this.props.name || ''
+    name: this.props.name || '',
+    isHovering: false
   }
 
   handleInputChange = (evt) => {
@@ -50,15 +51,26 @@ class HabitListItem extends Component {
     this.props.submitChange(this.state.name);
   }
 
+  handleHover = () => {
+    this.setState({ isHovering: !this.state.isHovering });
+  }
+
   openHabitSettings = (habitData) => {
     ipcRenderer.send('open-habit-settings', habitData);
   }
 
   render() {
-    const { habit, autoFocus, placeholder, completionCount } = this.props;
+    const {
+      habit,
+      autoFocus,
+      placeholder,
+      completionCount
+    } = this.props;
 
     return (
-      <div className={habitListItemStyles}>
+      <div className={habitListItemStyles}
+        onMouseEnter={this.handleHover}
+        onMouseLeave={this.handleHover}>
         <input type="text"
                className={habitListItemInputStyles}
                ref={(input) => { this.nameInput = input; }} 
@@ -69,12 +81,16 @@ class HabitListItem extends Component {
                onKeyPress={this.handleKeyPress}
                onBlur={this.handleBlur} />
 
-        <span>{completionCount}</span>
-        <span className={css`color:#1bbd49;`}>✓</span>
-
-        <span onClick={() => {this.openHabitSettings(habit)}}>
-          ...
-        </span>
+        {
+          this.state.isHovering ?
+          <span onClick={() => {this.openHabitSettings(habit)}}>
+            ...
+          </span> :
+          <div>
+            <span>{completionCount}</span>
+            <span className={css`color:#1bbd49;`}>✓</span>
+          </div>
+        }
       </div>
     );
   }
