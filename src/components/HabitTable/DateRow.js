@@ -29,6 +29,16 @@ const dateRowDateIsTodayStyles = css`
   color: white;
 `;
 
+function getDateStyles (date) {
+  if (date.isSame(moment(), 'day')) {
+    return dateRowDateIsTodayStyles;
+  } else if (date.isAfter(moment(), 'day')) {
+    return css`color: #b9b8b9`;
+  } else {
+    return "";
+  }
+}
+
 const DateRow = ({ dates }) => {
   return (
     <div className={dateRowStyles}>
@@ -38,7 +48,7 @@ const DateRow = ({ dates }) => {
         return (
           <div key={`dateRow-date-${index}-${formattedDate}`}
                className={dateRowDateStyles}>
-            <span className={date.isSame(moment(), 'day') ? dateRowDateIsTodayStyles : ""}>
+            <span className={getDateStyles(date)}>
               {formattedDate}
             </span>
           </div>

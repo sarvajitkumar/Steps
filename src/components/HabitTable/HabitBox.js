@@ -7,23 +7,17 @@ const habitBoxStyles = css`
   height: 35px;
   border-bottom: 1px solid #999999;
   border-right: 1px solid #999999;
-  cursor: pointer;
-
-  &:hover {
-    background-color: grey;
-  }
 `
 
 const HabitBox = (props) => {
   return (
-    <div className={habitBoxStyles}
-          style={{backgroundColor: props.backgroundColor}}
-          onClick={props.onClick} />
+    <div className={css`${habitBoxStyles} ${props.boxDynamicStyles}`}
+      onClick={props.onClick} />
   );
 }
 
 HabitBox.propTypes = {
-  backgroundColor: PropTypes.string.isRequired,
+  boxDynamicStyles: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 }
 

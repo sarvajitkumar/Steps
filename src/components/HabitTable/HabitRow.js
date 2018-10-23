@@ -22,15 +22,18 @@ class HabitRow extends Component {
     }));
   }
 
-  getBoxBackgroundColor(date) {
+  getDynamicHabitBoxStyles(date) {
     const habitHasDate = this.props.habit.dates.includes(date.format("MM/DD/YYYY"));
 
     if (date.isAfter(new Date())) {
-      return '#cccccc';
+      return css`
+        background-color: #cccccc;
+        border-bottom: 1px solid #bfb9bf;
+        border-right: 1px solid #bfb0bf;`;
     } else if (habitHasDate) {
-      return '#1bbd49';
+      return css`background-color:#1bbd49`;
     } else {
-      return '#a6a6a6';
+      return css`background-color:#a6a6a6`;
     }
   }
 
@@ -40,7 +43,7 @@ class HabitRow extends Component {
         {this.props.dates.map(date => (
           <HabitBox key={`habit-box-${date.format("MM/DD")}`}
                     onClick={() => {this.toggleHabit(date)}}
-                    backgroundColor={this.getBoxBackgroundColor(date)} />
+                    boxDynamicStyles={this.getDynamicHabitBoxStyles(date)} />
         ))}
       </div>
     );
