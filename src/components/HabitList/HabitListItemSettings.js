@@ -18,9 +18,8 @@ const HabitItemSettingsContainerStyles = css` position: absolute;
 const HabitItemSettingsStyles = css`
   width: inherit;
   height: inherit;
-  color: #7A7A7A;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 0;
   font-size: 12px;
 
   .habit-item-settings-header {
@@ -32,6 +31,18 @@ const HabitItemSettingsStyles = css`
   }
 `;
 
+const habitRowStyles = css`
+  display: flex;
+  padding: 5px 0;
+
+  span {
+    flex: 0.58;
+    text-align: right;
+    margin-right: 8px;
+    color: #7A7A7A;
+  }
+`;
+
 const habitItemSettingsStreaksStyles = css`
   border-top: 1px solid #DEDEDE;
   border-bottom: 1px solid #DEDEDE;
@@ -40,6 +51,7 @@ const habitItemSettingsStreaksStyles = css`
 const habitItemSettingsFooterStyles = css`
   display: flex;
   justify-content: flex-end;
+  padding: 10px;
 `;
 
 class HabitListItemSettings extends Component {
@@ -79,18 +91,32 @@ class HabitListItemSettings extends Component {
         <div className={HabitItemSettingsStyles}>
           <div className="habit-item-settings-header">{habit.name}</div>
           <div>
-            <div>Repeat</div>
-            <div>Reminder</div>
-            <div>Weekly Target</div>
+            <div className={habitRowStyles}>
+              <span>Repeat:</span>
+            </div>
+            <div className={habitRowStyles}>
+              <span>Reminder:</span>
+            </div>
+            <div className={habitRowStyles}>
+              <span>Weekly Target:</span>
+            </div>
           </div>
           <div className={habitItemSettingsStreaksStyles}>
-            <div>Current Streak: {currentStreak}</div>
-            <div>Longest Streak: {longestStreak}</div>
-            <div>Total Completions: {totalCompletions}</div>
-            <div>Weekly Completions: {weeklyCompletions}</div>
+            <div className={habitRowStyles}>
+              <span>Current Streak: </span>{currentStreak}
+            </div>
+            <div className={habitRowStyles}>
+              <span>Longest Streak:</span>{longestStreak}
+            </div>
+            <div className={habitRowStyles}>
+              <span>Total Completions:</span>{totalCompletions}
+            </div>
+            <div className={habitRowStyles}>
+              <span>Weekly Completions:</span>{weeklyCompletions}
+            </div>
           </div>
           <div className={habitItemSettingsFooterStyles}>
-            <button onClick={this.handleDelete}>DELETE</button>
+            <button onClick={this.handleDelete}>Delete</button>
           </div>
         </div>
       </div>
