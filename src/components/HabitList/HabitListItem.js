@@ -73,7 +73,7 @@ class HabitListItem extends Component {
         onMouseLeave={this.handleHover}>
         <input type="text"
                className={habitListItemInputStyles}
-               ref={(input) => { this.nameInput = input; }} 
+               ref={(input) => {this.nameInput = input;}} 
                autoFocus={autoFocus}
                placeholder={placeholder}
                value={this.state.name}
@@ -83,11 +83,17 @@ class HabitListItem extends Component {
 
         {
           this.state.isHovering ?
-          <span onClick={() => {this.openHabitSettings(habit)}}>
+          <span
+            className={css`
+              margin-bottom:10px;
+              font-weight:bold;
+              cursor:default;`
+            }
+            onClick={() => {this.openHabitSettings(habit)}}>
             ...
           </span> :
           <div>
-            <span>{completionCount}</span>
+            <span>{completionCount}</span>&nbsp;
             <span className={css`color:#1bbd49;`}>✓</span>
           </div>
         }
