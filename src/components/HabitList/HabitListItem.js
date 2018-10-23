@@ -51,8 +51,11 @@ class HabitListItem extends Component {
     this.props.submitChange(this.state.name);
   }
 
-  handleHover = () => {
-    this.setState({ isHovering: !this.state.isHovering });
+  handleHoverEnter = () => {
+    this.setState({ isHovering: true });
+  }
+  handleHoverLeave = () => {
+    this.setState({ isHovering: false });
   }
 
   openHabitSettings = (habitData) => {
@@ -69,8 +72,8 @@ class HabitListItem extends Component {
 
     return (
       <div className={habitListItemStyles}
-        onMouseEnter={this.handleHover}
-        onMouseLeave={this.handleHover}>
+        onMouseEnter={this.handleHoverEnter}
+        onMouseLeave={this.handleHoverLeave}>
         <input type="text"
                className={habitListItemInputStyles}
                ref={(input) => {this.nameInput = input;}} 

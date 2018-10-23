@@ -2,38 +2,39 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleRemoveHabit } from '../../actions';
 import { css } from 'emotion';
+import { getHabitProgress } from '../../utils/api/habitProgressApi';
 const { ipcRenderer } = window.require('electron');
 
-const HabitItemSettingsContainerStyles = css`
-  position: absolute;
+const HabitItemSettingsContainerStyles = css` position: absolute;
   display: flex;
   justify-content: center;
+  background-color: #FAFAFA;
+  width: 300px;
+  max-width: 300px;
+  height: 340px;
+  max-height: 340px;
 `;
 
 const HabitItemSettingsStyles = css`
-  width: 150px;
-  height: auto;
-  background-color: #ccc;
-  color: black;
+  width: inherit;
+  height: inherit;
+  color: #7A7A7A;
   border-radius: 5px;
   padding: 5px;
+  font-size: 12px;
 
   .habit-item-settings-header {
+    font-size: 20px;
     text-align: center;
   }
-
-  > :not(.habit-item-settings-header) {
-    font-size: 10px;
-  }
-
   > * {
     padding: 5px 0;
   }
 `;
 
 const habitItemSettingsStreaksStyles = css`
-  border-top: 1px solid darkgrey;
-  border-bottom: 1px solid darkgrey;
+  border-top: 1px solid #DEDEDE;
+  border-bottom: 1px solid #DEDEDE;
 `;
 
 const habitItemSettingsFooterStyles = css`
@@ -66,6 +67,13 @@ class HabitListItemSettings extends Component {
     const { habit } = this.state;
     if (!habit) return <div>Loading...</div>
 
+    const {
+      currentStreak,
+      longestStreak,
+      totalCompletions,
+      weeklyCompletions
+    } = getHabitProgress(habit);
+
     return (
       <div className={HabitItemSettingsContainerStyles}>
         <div className={HabitItemSettingsStyles}>
@@ -76,10 +84,10 @@ class HabitListItemSettings extends Component {
             <div>Weekly Target</div>
           </div>
           <div className={habitItemSettingsStreaksStyles}>
-            <div>Current Streak: 3</div>
-            <div>Longest Streak: 4</div>
-            <div>Total Completions: 5</div>
-            <div>Weekly Completions: 6</div>
+            <div>Current Streak: {currentStreak}</div>
+            <div>Longest Streak: {longestStreak}</div>
+            <div>Total Completions: {totalCompletions}</div>
+            <div>Weekly Completions: {weeklyCompletions}</div>
           </div>
           <div className={habitItemSettingsFooterStyles}>
             <button onClick={this.handleDelete}>DELETE</button>

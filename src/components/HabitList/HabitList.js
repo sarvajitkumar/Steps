@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import HabitListItem from './HabitListItem';
-import moment from 'moment';
 import { handleAddHabit, handleUpdateHabit } from '../../actions'
 import { css } from 'emotion';
+import { getCurrentStreak } from '../../utils/api/habitProgressApi';
 
 const habitListStyles = css`
   background-color: #565656;
@@ -14,9 +14,10 @@ const habitListAddStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30px;
+  height: 35px;
   border-top: 1px solid #58595D;
   font-size: 18px;
+  cursor: pointer;
 `;
 
 class HabitList extends Component {
@@ -46,21 +47,6 @@ class HabitList extends Component {
     }));
   }
 
-  getConsecutiveCount(dates) {
-    let date = moment();
-    let counter = dates.includes(date.format('MM/DD/YYYY')) ? 1 : 0;
-
-    while (date != null) {
-      date.subtract(1, 'days');
-      const formattedDate = date.format('MM/DD/YYYY');
-
-      if (dates.includes(formattedDate)) counter += 1
-      else date = null;
-    }
-
-    return counter;
-  }
-
   render() {
     return (
       <div className={habitListStyles}>
@@ -69,7 +55,7 @@ class HabitList extends Component {
             key={`habit-list-item-${habit._id}`}
             habit={habit}
             name={habit.name}
-            completionCount={this.getConsecutiveCount(habit.dates)}
+            completionCount={getCurrentStreak(habit.dates)}
             submitChange={(newName) => {this.updateHabitName(habit, newName)}} />
         ))}
         {this.state.newHabitInputOpened ?
