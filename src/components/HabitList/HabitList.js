@@ -3,6 +3,21 @@ import { connect } from 'react-redux';
 import HabitListItem from './HabitListItem';
 import moment from 'moment';
 import { handleAddHabit, handleUpdateHabit } from '../../actions'
+import { css } from 'emotion';
+
+const habitListStyles = css`
+  background-color: #565656;
+  color: white;
+`;
+
+const habitListAddStyles = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border-top: 1px solid #58595D;
+  font-size: 18px;
+`;
 
 class HabitList extends Component {
   state = {
@@ -48,7 +63,7 @@ class HabitList extends Component {
 
   render() {
     return (
-      <div className="habit-list">
+      <div className={habitListStyles}>
         {this.props.habits.map(habit => (
           <HabitListItem
             key={`habit-list-item-${habit._id}`}
@@ -65,8 +80,7 @@ class HabitList extends Component {
               name={this.state.newHabitName}
               submitChange={this.createHabit} />
           </div> :
-          <div
-            style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '30px'}}
+          <div className={habitListAddStyles}
             onClick={() => {this.setState({newHabitInputOpened: true})}}>
             +
           </div>

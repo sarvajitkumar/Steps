@@ -5,7 +5,6 @@ import store from './store';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './index.css';
 import './styles/Resizer.css';
-import './components/HabitList/style.scss';
 import App from './containers/App';
 import * as serviceWorker from './utils/serviceWorker';
 import HabitListItemSettings from './components/HabitList/HabitListItemSettings';
