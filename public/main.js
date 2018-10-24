@@ -141,8 +141,8 @@ function createTray() {
 
 function createSettingsChildWindow() {
   settingsChildWindow = new BrowserWindow({
-    width: 160,
-    height: 172,
+    width: 300,
+    height: 340,
     show: false,
     frame: false,
     parent: mainWindow,
@@ -161,7 +161,7 @@ function createWindow() {
     height: 248,
     show: false,
     frame: false,
-    // resizable: false,
+    resizable: false,
     minimizable: false,
     maximizable: false,
     alwaysOnTop: true,
@@ -182,8 +182,8 @@ function setIpcListeners() {
   ipcMain.on('open-habit-settings', (_, arg) => {
     settingsChildWindow.loadURL(
       isDev
-        ? 'http://localhost:3000/habit-settings'
-        : `file://${path.join(__dirname, "../build/index.html/habit-settings")}`
+        ? `http://localhost:3000/habit-settings/${arg._id}`
+        : `file://${path.join(__dirname, `../build/index.html/habit-settings/${arg._id}`)}`
     );
 
     const { screen } = require('electron');
@@ -191,10 +191,6 @@ function setIpcListeners() {
 
     settingsChildWindow.setPosition(x, y);
     settingsChildWindow.show();
-
-    settingsChildWindow.webContents.on('did-finish-load', () => {
-      settingsChildWindow.webContents.send('habit-data', arg)
-    });
   });
 
   ipcMain.on('handle-settings-delete-click', () => {

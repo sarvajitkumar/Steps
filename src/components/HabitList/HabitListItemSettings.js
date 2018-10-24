@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { handleRemoveHabit } from '../../actions';
+import { handleInitialData, handleRemoveHabit } from '../../actions';
 import { css } from 'emotion';
 import { getHabitProgress } from '../../utils/api/habitsProgressUtils';
+import HabitReminderSettings from './HabitReminderSettings';
 const { ipcRenderer } = window.require('electron');
 
 const HabitItemSettingsContainerStyles = css` position: absolute;
@@ -36,7 +37,7 @@ const habitRowStyles = css`
   padding: 5px 0;
 
   span {
-    flex: 0.58;
+    flex: 0.52;
     text-align: right;
     margin-right: 8px;
     color: #7A7A7A;
@@ -55,18 +56,12 @@ const habitItemSettingsFooterStyles = css`
 `;
 
 class HabitListItemSettings extends Component {
-  state = {
-    habit: null
-  }
-
   componentDidMount() {
-    ipcRenderer.on('habit-data', (_, habit) => {
-      this.setState({ habit });
-    });
+    this.props.dispatch(handleInitialData());
   }
 
   handleDelete = () => {
-    this.props.dispatch(handleRemoveHabit(this.state.habit._id));
+    this.props.dispatch(handleRemoveHabit(this.props.habit._id));
   
     setTimeout(
       () => {
@@ -76,7 +71,7 @@ class HabitListItemSettings extends Component {
   }
 
   render() {
-    const { habit } = this.state;
+    const { habit } = this.props;
     if (!habit) return <div>Loading...</div>
 
     const {
@@ -91,15 +86,10 @@ class HabitListItemSettings extends Component {
         <div className={HabitItemSettingsStyles}>
           <div className="habit-item-settings-header">{habit.name}</div>
           <div>
-            <div className={habitRowStyles}>
-              <span>Repeat:</span>
-            </div>
-            <div className={habitRowStyles}>
-              <span>Reminder:</span>
-            </div>
-            <div className={habitRowStyles}>
-              <span>Weekly Target:</span>
-            </div>
+            <HabitReminderSettings
+              habit={habit}
+              habitRowStyles={habitRowStyles}
+              handleDayClick={this.handleReminderDayClick} />
           </div>
           <div className={habitItemSettingsStreaksStyles}>
             <div className={habitRowStyles}>
@@ -124,4 +114,10 @@ class HabitListItemSettings extends Component {
   }
 }
 
-export default connect()(HabitListItemSettings);
+function mapStateToProps({habits}, props) {
+  const habit = habits.find(habit => habit._id === props.match.params.habit_id);
+
+  return { habit }
+}
+
+export default connect(mapStateToProps)(HabitListItemSettings);

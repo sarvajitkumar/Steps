@@ -15,7 +15,7 @@ render(
     <Router>
       <Fragment>
         <Route exact path="/" component={App} />
-        <Route path="/habit-settings" component={HabitListItemSettings} />
+        <Route path="/habit-settings/:habit_id" component={HabitListItemSettings} />
         <Route path="/preferences" component={Preferences} />
       </Fragment>
     </Router>
