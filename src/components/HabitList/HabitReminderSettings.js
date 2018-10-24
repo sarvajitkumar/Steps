@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { handleUpdateHabit } from '../../actions';
 import { css } from 'emotion';
 import { connect } from 'react-redux';
+import { _setReminders } from '../../utils/setReminders';
 
 const habitReminderButtonStyles = css`
   background-color: #A7A7A7;
@@ -16,9 +17,16 @@ const habitReminderButtonStyles = css`
 `;
 
 class HabitReminderSettings extends Component {
-  state = {
-    shouldRemind: this.props.habit.reminders.shouldRemind,
-    time: this.props.habit.reminders.time || "",
+  constructor(props) {
+    super(props);
+
+    const habit = this.props.habit;
+    const shouldRemind = habit.reminders ? habit.reminders.shouldRemind : false;
+    const time = habit.reminders ? habit.reminders.time : "";
+
+    this.state = {
+      shouldRemind, time
+    }
   }
 
   getDayBackgroundColor = (day) => {
@@ -63,14 +71,17 @@ class HabitReminderSettings extends Component {
 
   handleReminderTime = (e) => {
     const habit = this.props.habit;
+    const newReminders = {
+      ...habit.reminders,
+      time: e.target.value
+    }
 
     this.props.dispatch(handleUpdateHabit({
       ...habit,
-      reminders: {
-        ...habit.reminders,
-        time: e.target.value
-      }
+      reminders: newReminders
     }))
+
+    _setReminders(habit.name, newReminders);
   }
 
   render() {
@@ -96,7 +107,7 @@ class HabitReminderSettings extends Component {
               checked={this.state.shouldRemind}
               onChange={this.handleReminderCheck} />
             <input type="time"
-              defaultValue={this.props.habit.reminders.time}
+              defaultValue={this.state.time}
               disabled={!this.state.shouldRemind}
               onBlur={this.handleReminderTime} />
           </div>

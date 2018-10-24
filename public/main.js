@@ -3,7 +3,8 @@ const {
   BrowserWindow,
   Tray,
   Menu,
-  ipcMain
+  ipcMain,
+  Notification
 } = require('electron');
 const path = require('path');
 const iconPath = path.join(__dirname, 'stairs.png')
@@ -146,7 +147,7 @@ function createSettingsChildWindow() {
     show: false,
     frame: false,
     parent: mainWindow,
-    resizable: false,
+    // resizable: false,
     focus: true
   });
   settingsChildWindow.on('blur', () => {
@@ -161,7 +162,7 @@ function createWindow() {
     height: 248,
     show: false,
     frame: false,
-    resizable: false,
+    // resizable: false,
     minimizable: false,
     maximizable: false,
     alwaysOnTop: true,
@@ -196,6 +197,11 @@ function setIpcListeners() {
   ipcMain.on('handle-settings-delete-click', () => {
     mainWindow.webContents.send('reload-db');
     settingsChildWindow.hide();
+  });
+
+  const reminders = [];
+  ipcMain.on('add-reminder', (_, setReminderString) => {
+    eval(setReminderString);
   });
 }
 
