@@ -17,7 +17,8 @@ const habitReminderButtonStyles = css`
 
 class HabitReminderSettings extends Component {
   state = {
-    shouldRemind: this.props.habit.reminders.shouldRemind
+    shouldRemind: this.props.habit.reminders.shouldRemind,
+    time: this.props.habit.reminders.time || "",
   }
 
   getDayBackgroundColor = (day) => {
@@ -60,6 +61,18 @@ class HabitReminderSettings extends Component {
     }))
   }
 
+  handleReminderTime = (e) => {
+    const habit = this.props.habit;
+
+    this.props.dispatch(handleUpdateHabit({
+      ...habit,
+      reminders: {
+        ...habit.reminders,
+        time: e.target.value
+      }
+    }))
+  }
+
   render() {
     return (
       <Fragment>
@@ -79,8 +92,13 @@ class HabitReminderSettings extends Component {
         <div className={this.props.habitRowStyles}>
           <span>Reminder:</span>
           <div className={css`flex:0.48`}>
-            <input type="checkbox" checked={this.state.shouldRemind} onChange={this.handleReminderCheck} />
-            <input type="time" disabled={!this.state.shouldRemind} />
+            <input type="checkbox"
+              checked={this.state.shouldRemind}
+              onChange={this.handleReminderCheck} />
+            <input type="time"
+              defaultValue={this.props.habit.reminders.time}
+              disabled={!this.state.shouldRemind}
+              onBlur={this.handleReminderTime} />
           </div>
         </div>
       </Fragment>
