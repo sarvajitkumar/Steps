@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { handleRemoveHabit } from '../../actions';
 import { css } from 'emotion';
-import { getHabitProgress } from '../../utils/api/habitProgressApi';
+import { getHabitProgress } from '../../utils/api/habitsProgressUtils';
 const { ipcRenderer } = window.require('electron');
 
 const HabitItemSettingsContainerStyles = css` position: absolute;

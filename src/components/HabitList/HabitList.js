@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import HabitListItem from './HabitListItem';
 import { handleAddHabit, handleUpdateHabit } from '../../actions'
 import { css } from 'emotion';
-import { getCurrentStreak } from '../../utils/api/habitProgressApi';
+import { getCurrentStreak } from '../../utils/api/habitsProgressUtils';
 
 const habitListStyles = css`
   background-color: #565656;
