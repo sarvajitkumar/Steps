@@ -158,9 +158,10 @@ function createSettingsChildWindow() {
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
+    minWidth: 300,
+    width: 650,
     minHeight: 71,
-    height: 248,
+    height: 71,
     show: false,
     frame: false,
     resizable: false,
@@ -219,6 +220,12 @@ function setIpcListeners() {
     let [width, height] = mainWindow.getSize();
     height = shouldAdd ? height+36 : height-36;
     mainWindow.setSize(width, height);
+  });
+
+  //set up width listener for mainWindow
+  ipcMain.on('set-width', (_, widthString) => {
+    const size = mainWindow.getSize();
+    mainWindow.setSize(parseInt(widthString), size[1])
   });
 }
 

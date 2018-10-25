@@ -4,6 +4,7 @@ import SplitPane from 'react-split-pane';
 import HabitTable from '../components/HabitTable/HabitTable';
 import HabitList from '../components/HabitList/HabitList';
 import { handleInitialData } from '../actions';
+import { getWindowWidth } from '../utils/api/preferencesApi';
 const { ipcRenderer } = window.require('electron');
 
 class HabitPage extends Component {
@@ -14,6 +15,12 @@ class HabitPage extends Component {
       this.props.dispatch(handleInitialData())
       this.forceUpdate();
     });
+
+    getWindowWidth().then(windowWidth => {
+      if (windowWidth) {
+        ipcRenderer.send('set-width', windowWidth);
+      }
+    });
   }
 
   render() {
@@ -22,7 +29,7 @@ class HabitPage extends Component {
     }
 
     return (
-      <SplitPane split="vertical" minSize={180} primary="second" paneStyle={{overflow:"auto"}}>
+      <SplitPane split="vertical" minSize={180} primary="second" paneStyle={{overflow: "auto"}}>
         <HabitTable habits={this.props.habits} />
         <HabitList habits={this.props.habits} />
       </SplitPane>

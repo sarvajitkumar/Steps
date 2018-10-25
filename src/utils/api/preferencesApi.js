@@ -1,4 +1,5 @@
 import DataStore from 'nedb';
+const { ipcRenderer } = window.require('electron');
 
 function loadDatabase() {
   return new DataStore({
@@ -18,6 +19,17 @@ export function getPreferences() {
   });
 }
 
+export function getWindowWidth() {
+  return new Promise((res, rej) => {
+    const db = loadDatabase();
+
+    db.findOne({name: 'windowWidth'}, (err, preference) => {
+      if (err) rej(err);
+      res(preference.value);
+    });
+  });
+}
+
 export function updatePreference(name, field) {
   return new Promise((res, rej) => {
     const db = loadDatabase();
@@ -25,6 +37,10 @@ export function updatePreference(name, field) {
     db.update({ name }, Object.assign(field, {name}),
       { upsert: true }, (err) => {
         if (err) rej(err);
+
+        if (name === 'windowWidth') {
+          ipcRenderer.send('set-width', field.value);
+        }
       });
   });
 }
