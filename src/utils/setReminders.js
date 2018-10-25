@@ -56,12 +56,17 @@ function _setReminderForDay(day, time, name) {
 } 
 
 function _setCountdown(time, day, name) {
-  // const now = moment();
+  const now = moment();
   const [hours, minutes] = time.split(':').map(time => parseInt(time));
   const reminderDate = new moment();
   reminderDate.hours(hours);
   reminderDate.minutes(minutes);
   reminderDate.day(day);
+  reminderDate.seconds(0);
+  reminderDate.millisecond(0);
+
+  let countdown = reminderDate.valueOf() - now.valueOf();
+  countdown = (countdown > 0) ? countdown : countdown + 604800000;
 
   const reminderEvalString = `
     setTimeout(() => {
@@ -69,7 +74,11 @@ function _setCountdown(time, day, name) {
         title: "Steps",
         body: "${name}"
       }).show();
-    }, 1000);
+
+      // setInterval(() => {
+      //   notification.show();
+      // }, 604800000)
+    }, ${countdown});
   `;
 
   ipcRenderer.send('add-reminder', reminderEvalString);
