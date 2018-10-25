@@ -6,6 +6,10 @@ import {
 } from '../utils/api/habitsApi';
 
 import {
+  _updateHabitReminders
+} from '../utils/api/habitRemindersApi';
+
+import {
   RECEIVE_HABITS,
   ADD_HABIT,
   UPDATE_HABIT,
@@ -50,15 +54,17 @@ function addHabit(habit) {
   }
 }
 
-export function handleUpdateHabit(habit) {
-  return (dispatch) => {
-    _updateHabit(habit)
-      .then(habit => {
-        dispatch(updateHabit(habit));
-      })
-      .catch(err => {
-        console.error(err);
-      });
+export function handleUpdateHabit(habit, forReminders=false) {
+  return async (dispatch) => {
+    try {
+      const updatedHabit = forReminders ?
+        await _updateHabitReminders(habit) :
+        await _updateHabit(habit);
+      
+      dispatch(updateHabit(updatedHabit))
+    } catch(e) {
+      console.error(e);
+    }
   }
 }
 

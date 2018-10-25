@@ -199,7 +199,6 @@ function setIpcListeners() {
     settingsChildWindow.hide();
   });
 
-  const reminders = [];
   ipcMain.on('add-reminder', (_, setReminderString) => {
     eval(setReminderString);
   });
