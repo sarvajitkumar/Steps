@@ -159,10 +159,11 @@ function createSettingsChildWindow() {
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
+    minHeight: 71,
     height: 248,
     show: false,
     frame: false,
-    // resizable: false,
+    resizable: false,
     minimizable: false,
     maximizable: false,
     alwaysOnTop: true,
@@ -201,6 +202,23 @@ function setIpcListeners() {
 
   ipcMain.on('add-reminder', (_, setReminderString) => {
     eval(setReminderString);
+  });
+
+  //set up height listeners for mainWindow
+  ipcMain.on('set-initial-height', (_, habitCount) => {
+    const newHeight = 71 + ((habitCount-1)*36);
+    let [width, height] = mainWindow.getSize();
+
+    //we call in habit list item settings so in that case we wouldn't
+    //need to reset initial height
+    if (newHeight !== height) {
+      mainWindow.setSize(width, newHeight);
+    }
+  });
+  ipcMain.on('resize-height', (_, shouldAdd) => {
+    let [width, height] = mainWindow.getSize();
+    height = shouldAdd ? height+36 : height-36;
+    mainWindow.setSize(width, height);
   });
 }
 

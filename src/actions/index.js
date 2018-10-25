@@ -16,11 +16,15 @@ import {
   REMOVE_HABIT
 } from '../constants/habitConstants';
 
+const { ipcRenderer } = window.require('electron');
+
 export function handleInitialData() {
   return (dispatch) => {
-    return fetchHabits()
+    fetchHabits()
       .then(habits => {
-        return dispatch(receiveHabits(habits));
+        dispatch(receiveHabits(habits));
+
+        ipcRenderer.send('set-initial-height', habits.length);
       })
       .catch(err => {
         console.error(err);
@@ -40,6 +44,8 @@ export function handleAddHabit(habit) {
     createHabit(habit)
       .then(habit => {
         dispatch(addHabit(habit))
+
+        ipcRenderer.send('resize-height', true);
       })
       .catch(err => {
         console.error(err);
@@ -80,6 +86,8 @@ export function handleRemoveHabit(_id) {
     deleteHabit(_id)
       .then(() => {
         dispatch(removeHabit(_id));
+
+        ipcRenderer.send('resize-height', false);
       })
       .catch(err => {
         console.error(err);
