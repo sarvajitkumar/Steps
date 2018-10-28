@@ -120,7 +120,7 @@ const menuTemplate = [
     label: "Quit Steps",
     accelerator: "Cmd+Q",
     click: () => {
-      mainWindow.close();
+      app.quit();
     }
   }
 ]
