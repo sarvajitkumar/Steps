@@ -1,5 +1,24 @@
 import DataStore from 'nedb';
 
+/*
+
+Schema
+
+[
+  {
+    _id: (some random id NEDB gives us)
+    name: 'exercise',
+    dates: ['01/01/2018', '01/02/2018'] //the dates the habit was completed
+    reminders: {
+      shouldRemind: true/false,
+      days: ['Su', M', 'Tu', 'W', 'Th', 'F', 'Sa'],
+      time: '13:34'
+    },
+  }
+]
+
+*/
+
 function loadDatabase() {
   return new DataStore({
     filename: 'steps/habitsData',
