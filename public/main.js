@@ -147,7 +147,7 @@ function createSettingsChildWindow() {
     show: false,
     frame: false,
     parent: mainWindow,
-    // resizable: false,
+    resizable: false,
     focus: true
   });
   settingsChildWindow.on('blur', () => {
@@ -201,8 +201,26 @@ function setIpcListeners() {
     settingsChildWindow.hide();
   });
 
-  ipcMain.on('add-reminder', (_, setReminderString) => {
-    eval(setReminderString);
+  const reminders = [];
+  ipcMain.on('add-reminder', (_, countdown, message) => {
+    function setUpInterval(notification) {
+      const interval = setInterval(() => {
+        notification.show();
+      }, 604800000);
+
+      reminders.push(interval);
+    }
+
+    const timeout = setTimeout(() => {
+      const notification = new Notification({
+        title: "Steps",
+        body: message
+      }).show();
+
+      setUpInterval(notification);
+    }, countdown);
+
+    reminders.push(timeout);
   });
 
   //set up height listeners for mainWindow
@@ -229,6 +247,13 @@ function setIpcListeners() {
   });
 }
 
+function clearReminders() {
+  reminders.forEach(reminder => {
+    clearTimeout(reminder);
+    clearInterval(reminder);
+  });
+}
+
 app.on('ready', () => {
   createMenu();
   createAboutWindow();
@@ -238,5 +263,7 @@ app.on('ready', () => {
   createSettingsChildWindow();
   setIpcListeners();
 });
+
+app.on('before-quit', clearReminders)
 
 app.dock.hide();

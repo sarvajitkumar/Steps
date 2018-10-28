@@ -2,20 +2,6 @@ import moment from 'moment';
 import { fetchHabits } from './api/habitsApi';
 const { ipcRenderer } = window.require('electron');
 
-//or we can save it on the habit obj as
-//reminders.reminderObjs
-
-//in those cases we have to find a way to update the reminder for that habit....
-//how do we differentiate between making sure of this
-
-//1. if user clicks the checkbox,
-//  add the reminder
-//2. if user simply changes the time or day
-//  we update the reminder
-
-//we can save these in the DB and then if it's there call them again
-//otherwise use Node's API to refresh()
-
 export function fetchAndSetReminders() {
   fetchHabits().then((habits) => {
     habits.forEach(habit => {
@@ -82,18 +68,5 @@ function _setCountdown(time, day, name) {
   let countdown = reminderDate.valueOf() - now.valueOf();
   countdown = (countdown > 0) ? countdown : countdown + 604800000;
 
-  const reminderEvalString = `
-    setTimeout(() => {
-      const notification = new Notification({
-        title: "Steps",
-        body: "${name}"
-      }).show();
-
-      // setInterval(() => {
-      //   notification.show();
-      // }, 604800000)
-    }, ${countdown});
-  `;
-
-  ipcRenderer.send('add-reminder', reminderEvalString);
+  ipcRenderer.send('add-reminder', countdown, name);
 }

@@ -48,25 +48,22 @@ class HabitReminderSettings extends Component {
       days.push(day);
     }
 
-    this.props.dispatch(handleUpdateHabit({
-      ...habit,
-      reminders: {
-        ...habit.reminders,
-        days
-      }
-    }));
+    const newReminders = {
+      ...habit.reminders,
+      days
+    };
+
+    this.updateHabit(newReminders);
   }
 
   handleReminderCheck = (e) => {
     this.setState({ shouldRemind: e.target.checked });
-
-    this.props.dispatch(handleUpdateHabit({
-      ...this.props.habit,
-      reminders: {
-        ...this.props.habit.reminders,
-        shouldRemind: e.target.checked
-      }
-    }))
+    const newReminders = {
+      ...this.props.habit.reminders,
+      shouldRemind: e.target.checked
+    }
+    
+    this.updateHabit(newReminders);
   }
 
   handleReminderTime = (e) => {
@@ -76,12 +73,21 @@ class HabitReminderSettings extends Component {
       time: e.target.value
     }
 
+    this.updateHabit(newReminders);
+  }
+
+  updateHabit(newReminders) {
+    const { habit } = this.props;
     this.props.dispatch(handleUpdateHabit({
       ...habit,
       reminders: newReminders
-    }))
+    }));
 
-    _setReminders(habit.name, newReminders);
+    this.refreshReminders(habit.name, newReminders);
+  }
+
+  refreshReminders(name, newReminders) {
+    _setReminders(name, newReminders);
   }
 
   render() {
