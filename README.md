@@ -6,3 +6,7 @@ to run the application in your local environment:
 2. run `npm run electron-dev`
 
 On the top right in your menu (if you're using a macOS) there should be an icon that resembles a green ladder.
+
+The app should look like the following:
+
+![image](/screenshot.png)
