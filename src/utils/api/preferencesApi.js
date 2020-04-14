@@ -25,7 +25,9 @@ export function getWindowWidth() {
 
     db.findOne({name: 'windowWidth'}, (err, preference) => {
       if (err) rej(err);
-      res(preference.value);
+
+      if (preference) res(preference.value);
+      else res(1000);
     });
   });
 }
