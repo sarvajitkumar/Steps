@@ -62,10 +62,7 @@ function createAboutWindow() {
     backgroundColor: "#eee"
   });
   aboutWindow.loadURL(
-    isDev
-      ? "http://localhost:3000/about.html"
-      : `file://${path.join(__dirname, "../build/about.html")}`
-  );
+    isDev ? 'http://localhost:3000' : `file://${__dirname}/../build/about.html`)
   aboutWindow.on('close', (e) => {
     e.preventDefault();
     aboutWindow.hide();
@@ -86,10 +83,7 @@ function createPreferencesWindow() {
     resizable: false,
   });
   preferencesWindow.loadURL(
-    isDev
-      ? "http://localhost:3000/preferences"
-      : `file://${path.join(__dirname, "../build/index.html/preferences")}`
-  );
+    isDev ? 'http://localhost:3000' : `file://${__dirname}/../build/about.html`)
   preferencesWindow.on('close', (e) => {
     e.preventDefault();
     preferencesWindow.hide();
@@ -170,10 +164,7 @@ function createWindow() {
     alwaysOnTop: true,
   });
   mainWindow.loadURL(
-    isDev
-      ? "http://localhost:3000"
-      : `file://${path.join(__dirname, "../build/index.html")}`
-  );
+    isDev ? 'http://localhost:3000' : `file://${__dirname}/../build/index.html`)
   mainWindow.on('blur', () => {
     if (!settingsChildWindow.isVisible()) {
       mainWindow.hide();
@@ -184,9 +175,7 @@ function createWindow() {
 function setIpcListeners() {
   ipcMain.on('open-habit-settings', (_, arg) => {
     settingsChildWindow.loadURL(
-      isDev
-        ? `http://localhost:3000/habit-settings/${arg._id}`
-        : `file://${path.join(__dirname, `../build/index.html/habit-settings/${arg._id}`)}`
+        isDev ? 'http://localhost:3000' : `file://${__dirname}/../build/index.html`
     );
 
     const { screen } = require('electron');

@@ -1,14 +1,16 @@
 {
-  "name": "steps",
-  "version": "0.1.0",
+  "name": "credential-manager",
+  "version": "1.0.0",
   "private": true,
-  "author": "Captain Electron",
-  "main": "public/main.js",
+  "author": "Imageofpi",
+  "main": "public/electron.js",
+  "license": "MIT",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
+    "electron-devtools-installer": "^3.2.0",
     "electron-is-dev": "^2.0.0",
     "nedb": "^1.8.0",
     "path-browserify": "^1.0.1",
@@ -23,14 +25,23 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dist": "electron-builder"
   },
   "build": {
-    "appId": "com.example.electron-cra",
+    "appId": "com.imageofpi.app",
     "files": [
-      "build/**/*",
-      "node_modules/**/*"
+      "./build/**/*",
+      "./public/electron.js"
     ],
+    "dmg": {
+      "title": "Credential Manager",
+      "icon": "build/lock.png",
+      "iconSize": 80,
+      "iconTextSize": 12
+    },
+    "target": "DMG",
+    "productName": "Credential Manager",
     "directories": {
       "buildResources": "assets"
     }
@@ -47,7 +58,7 @@
   "devDependencies": {
     "concurrently": "^7.6.0",
     "electron": "^22.0.0",
-    "electron-builder": "^22.10.3",
+    "electron-builder": "^23.0.2",
     "wait-on": "^7.0.1"
   },
   "resolutions": {
