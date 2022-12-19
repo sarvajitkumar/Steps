@@ -7,7 +7,7 @@ const {
   Notification
 } = require('electron');
 const path = require('path');
-const iconPath = path.join(__dirname, 'stairs.png')
+const iconPath = path.join(__dirname, 'lock.png')
 const isDev = require('electron-is-dev');
 
 let mainWindow;
@@ -160,8 +160,8 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     minWidth: 300,
     width: 650,
-    minHeight: 71,
-    height: 71,
+    minHeight: 400,
+    height: 650,
     show: false,
     frame: false,
     resizable: false,
@@ -247,12 +247,6 @@ function setIpcListeners() {
   });
 }
 
-function clearReminders() {
-  reminders.forEach(reminder => {
-    clearTimeout(reminder);
-    clearInterval(reminder);
-  });
-}
 
 app.on('ready', () => {
   createMenu();
@@ -263,7 +257,5 @@ app.on('ready', () => {
   createSettingsChildWindow();
   setIpcListeners();
 });
-
-app.on('before-quit', clearReminders)
 
 app.dock.hide();
